@@ -92,7 +92,7 @@ class VectorQuantizer(quantizer_parent.QuantizerParent):
         n_centriods = 2**(n_bits * d)
         print(n_centriods)
         
-        n_1 = torch.from_numpy(np.random.choice(n_subvectors, n_centriods, replace = False)).to(weights.device)
+        n_1 = torch.from_numpy(np.random.choice(n_subvectors, n_centriods, replace = False)).to(weight.device)
         # print("n_1", n_1)
         # print("max", torch.max(n_1), "min", torch.min(n_1))
         # print(X.shape)
@@ -227,9 +227,10 @@ if __name__ == "__main__":
     torch.random.manual_seed(0)
     torch.cuda.random.manual_seed(0)
     
+    device = torch.device("cuda:7")
     data = torch.load("test/weights_hessian.pt")
-    W = data["weights"]
-    hessian = data["hessian"]
+    W = data["weights"].to(device)
+    hessian = data["hessian"].to(device)
     print(W.shape)
     
     vq = VectorQuantizer_SampleReassign.quantize(W, hessian, d = 4, n_bits = 2, n_iter = 100)
@@ -238,15 +239,15 @@ if __name__ == "__main__":
     # sys.path.append(os.getcwd())
     import src.utils.alignment.hessian_general_align as hessian_general_align
     
-    # hessian_use = hessian/hessian.shape[0]
-    hessian_use = torch.eye(W.shape[0]).to(W.device)
+    hessian_use = hessian/hessian.shape[0]
+    # hessian_use = torch.eye(W.shape[0]).to(W.device)
     hessian_general_align.align(vq,
                           W,
                           hessian_use,
                           None,
-                          n_iters = 1000,
+                          n_iters = 100,
                           val_every = -1,
-                          patience = 1000,
+                          patience = 100,
                           patience_scheduler= 1,
                           eps = 1e-4,
                           lr = 1e-3,
@@ -256,21 +257,21 @@ if __name__ == "__main__":
                           lr_multiplier=0.9,
                           verbose = 10)
     
-    hessian_general_align.align(vq,
-                          W,
-                          hessian_use,
-                          hessian_use,
-                          n_iters = 100,
-                          val_every = 1,
-                          patience = 1000,
-                          patience_scheduler= 1,
-                          eps = 1e-4,
-                          lr = 1e-3,
-                          low_bound = 1e-6,
-                          clip_grad = 1e-1,
-                          discrete_update_every = 1,
-                          lr_multiplier=0.9,
-                          verbose = 1)
+    # hessian_general_align.align(vq,
+    #                       W,
+    #                       hessian_use,
+    #                       hessian_use,
+    #                       n_iters = 100,
+    #                       val_every = 1,
+    #                       patience = 1000,
+    #                       patience_scheduler= 1,
+    #                       eps = 1e-4,
+    #                       lr = 1e-3,
+    #                       low_bound = 1e-6,
+    #                       clip_grad = 1e-1,
+    #                       discrete_update_every = 1,
+    #                       lr_multiplier=0.9,
+    #                       verbose = 1)
     
     print(vq().dtype)
     vq.clean()
