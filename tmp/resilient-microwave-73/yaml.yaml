@@ -1,0 +1,14 @@
+quantizer_kwargs:
+  cluster_ignore_norms: true
+  d: 5
+  initialize_method: kmeans
+  n_bits: 2
+  n_iters: 100
+  norm_order:
+  - 0
+  - 1
+  zero:
+  - false
+  - false
+quantizer_type: 1st_order
+seed: 0

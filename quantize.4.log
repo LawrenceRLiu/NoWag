@@ -1,0 +1,33 @@
+wandb: Using wandb-core as the SDK backend.  Please refer to https://wandb.me/wandb-core for more information.
+wandb: Currently logged in as: m6481. Use `wandb login --relogin` to force relogin
+wandb: Tracking run with wandb version 0.19.1
+wandb: Run data is saved locally in /data/lliu/huffman/wandb/run-20250106_011852-oykzc0wj
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run fluent-voice-69
+wandb: ⭐️ View project at https://wandb.ai/m6481/compression_no_finetune
+wandb: 🚀 View run at https://wandb.ai/m6481/compression_no_finetune/runs/oykzc0wj
+Namespace(models_to_compress=['meta-llama/Llama-2-7b-hf'], seqlens=[4096], batch_size=1, hessian_path='/data/lliu/huffman/models/{model_name}/hessians_new/pajama/2048', save_path='/data/lliu/huffman/models/{model_name}/compressed', self_attn_compression_algorithm='quantize', mlp_compression_algorithm='quantize', devices=['cuda:5', 'cuda:4'], yaml_path='/data/lliu/huffman/scripts/1layer_compress/quantizer_args.yaml', self_attn_yaml_path=None, mlp_yaml_path=None, use_already_done=False, use_wandb=True, resume_wandb=False, wandb_id=None, wandb_project='compression_no_finetune')
+  0%|          | 0/224 [00:00<?, ?it/s]n_commands 224
+sample command python -u scripts/1layer_compress/quantize_compress.py --load_path /data/lliu/huffman/models/meta-llama/Llama-2-7b-hf/hessians_new/pajama/2048/layer_3/mlp.gate_proj.pt --save_path /data/lliu/huffman/models/meta-llama/Llama-2-7b-hf/compressed/fluent-voice-69/meta-llama/Llama-2-7b-hf/layer_3/mlp.gate_proj/compressed.pt --yaml_path tmp/fluent-voice-69/yaml.yaml
+running: nohup python -u scripts/1layer_compress/quantize_compress.py --load_path /data/lliu/huffman/models/meta-llama/Llama-2-7b-hf/hessians_new/pajama/2048/layer_3/mlp.gate_proj.pt --save_path /data/lliu/huffman/models/meta-llama/Llama-2-7b-hf/compressed/fluent-voice-69/meta-llama/Llama-2-7b-hf/layer_3/mlp.gate_proj/compressed.pt --yaml_path tmp/fluent-voice-69/yaml.yaml --device cuda:5 > /data/lliu/huffman/models/meta-llama/Llama-2-7b-hf/compressed/fluent-voice-69/meta-llama/Llama-2-7b-hf/layer_3/mlp.gate_proj/compressed.log 2>&1 &
+running: nohup python -u scripts/1layer_compress/quantize_compress.py --load_path /data/lliu/huffman/models/meta-llama/Llama-2-7b-hf/hessians_new/pajama/2048/layer_3/mlp.up_proj.pt --save_path /data/lliu/huffman/models/meta-llama/Llama-2-7b-hf/compressed/fluent-voice-69/meta-llama/Llama-2-7b-hf/layer_3/mlp.up_proj/compressed.pt --yaml_path tmp/fluent-voice-69/yaml.yaml --device cuda:4 > /data/lliu/huffman/models/meta-llama/Llama-2-7b-hf/compressed/fluent-voice-69/meta-llama/Llama-2-7b-hf/layer_3/mlp.up_proj/compressed.log 2>&1 &
+Traceback (most recent call last):
+  File "/data/lliu/huffman/scripts/layer_by_layer_parallel_compress.py", line 335, in <module>
+    time.sleep(10)
+KeyboardInterrupt
+Exception ignored in atexit callback: <function _start_and_connect_service.<locals>.teardown_atexit at 0x722e371336a0>
+Traceback (most recent call last):
+  File "/home/lliu/anaconda3/lib/python3.11/site-packages/wandb/sdk/lib/service_connection.py", line 93, in teardown_atexit
+    conn.teardown(hooks.exit_code)
+  File "/home/lliu/anaconda3/lib/python3.11/site-packages/wandb/sdk/lib/service_connection.py", line 216, in teardown
+    return self._proc.join()
+           ^^^^^^^^^^^^^^^^^
+  File "/home/lliu/anaconda3/lib/python3.11/site-packages/wandb/sdk/service/service.py", line 241, in join
+    ret = self._internal_proc.wait()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lliu/anaconda3/lib/python3.11/subprocess.py", line 1277, in wait
+    self._wait(timeout=sigint_timeout)
+  File "/home/lliu/anaconda3/lib/python3.11/subprocess.py", line 2040, in _wait
+    time.sleep(delay)
+KeyboardInterrupt: 
+  0%|          | 0/224 [00:16<?, ?it/s]

@@ -1,0 +1,143 @@
+/home/lliu/anaconda3/lib/python3.11/site-packages/torch/jit/annotations.py:389: UserWarning: TorchScript will treat type annotations of Tensor dtype-specific subtypes as if they are normal Tensors. dtype constraints are not enforced in compilation either.
+  warnings.warn(
+/home/lliu/anaconda3/lib/python3.11/site-packages/torch/jit/annotations.py:389: UserWarning: TorchScript will treat type annotations of Tensor dtype-specific subtypes as if they are normal Tensors. dtype constraints are not enforced in compilation either.
+  warnings.warn(
+/home/lliu/anaconda3/lib/python3.11/site-packages/pandas/core/arrays/masked.py:60: UserWarning: Pandas requires version '1.3.6' or newer of 'bottleneck' (version '1.3.5' currently installed).
+  from pandas.core import (
+/home/lliu/anaconda3/lib/python3.11/site-packages/pandas/core/arrays/masked.py:60: UserWarning: Pandas requires version '1.3.6' or newer of 'bottleneck' (version '1.3.5' currently installed).
+  from pandas.core import (
+2025-01-05 20:19:16.455297: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:485] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2025-01-05 20:19:16.474115: E external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:8454] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+2025-01-05 20:19:16.480498: E external/local_xla/xla/stream_executor/cuda/cuda_blas.cc:1452] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+2025-01-05 20:19:16.497344: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2025-01-05 20:19:16.507532: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:485] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2025-01-05 20:19:16.524279: E external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:8454] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+2025-01-05 20:19:16.529315: E external/local_xla/xla/stream_executor/cuda/cuda_blas.cc:1452] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+2025-01-05 20:19:16.542375: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2025-01-05 20:19:17.570312: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+2025-01-05 20:19:17.709931: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]========== NON BASTERDIZED ==========
+pid 115794
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:00<00:00,  4.04it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:00<00:00,  3.57it/s]Loading checkpoint shards: 100%|██████████| 2/2 [00:00<00:00,  4.41it/s]Loading checkpoint shards: 100%|██████████| 2/2 [00:00<00:00,  4.35it/s]
+Loading checkpoints:   0%|          | 0/32 [00:00<?, ?it/s]Loading checkpoint shards: 100%|██████████| 2/2 [00:00<00:00,  3.56it/s]Loading checkpoint shards: 100%|██████████| 2/2 [00:00<00:00,  3.56it/s]
+Model loaded. LlamaForCausalLM(
+  (model): LlamaModel(
+    (embed_tokens): Embedding(32000, 4096)
+    (layers): ModuleList(
+      (0-31): 32 x LlamaDecoderLayer(
+        (self_attn): LlamaSdpaAttention(
+          (q_proj): Linear(in_features=4096, out_features=4096, bias=False)
+          (k_proj): Linear(in_features=4096, out_features=4096, bias=False)
+          (v_proj): Linear(in_features=4096, out_features=4096, bias=False)
+          (o_proj): Linear(in_features=4096, out_features=4096, bias=False)
+          (rotary_emb): LlamaRotaryEmbedding()
+        )
+        (mlp): LlamaMLP(
+          (gate_proj): Linear(in_features=4096, out_features=11008, bias=False)
+          (up_proj): Linear(in_features=4096, out_features=11008, bias=False)
+          (down_proj): Linear(in_features=11008, out_features=4096, bias=False)
+          (act_fn): SiLU()
+        )
+        (input_layernorm): LlamaRMSNorm((4096,), eps=1e-05)
+        (post_attention_layernorm): LlamaRMSNorm((4096,), eps=1e-05)
+      )
+    )
+    (norm): LlamaRMSNorm((4096,), eps=1e-05)
+    (rotary_emb): LlamaRotaryEmbedding()
+  )
+  (lm_head): Linear(in_features=4096, out_features=32000, bias=False)
+)
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:00<00:00,  2.86it/s]Loading checkpoint shards: 100%|██████████| 2/2 [00:00<00:00,  3.43it/s]Loading checkpoint shards: 100%|██████████| 2/2 [00:00<00:00,  3.33it/s]
+Model loaded. LlamaForCausalLM(
+  (model): LlamaModel(
+    (embed_tokens): Embedding(32000, 4096)
+    (layers): ModuleList(
+      (0-31): 32 x LlamaDecoderLayer(
+        (self_attn): LlamaSdpaAttention(
+          (q_proj): Linear(in_features=4096, out_features=4096, bias=False)
+          (k_proj): Linear(in_features=4096, out_features=4096, bias=False)
+          (v_proj): Linear(in_features=4096, out_features=4096, bias=False)
+          (o_proj): Linear(in_features=4096, out_features=4096, bias=False)
+          (rotary_emb): LlamaRotaryEmbedding()
+        )
+        (mlp): LlamaMLP(
+          (gate_proj): Linear(in_features=4096, out_features=11008, bias=False)
+          (up_proj): Linear(in_features=4096, out_features=11008, bias=False)
+          (down_proj): Linear(in_features=11008, out_features=4096, bias=False)
+          (act_fn): SiLU()
+        )
+        (input_layernorm): LlamaRMSNorm((4096,), eps=1e-05)
+        (post_attention_layernorm): LlamaRMSNorm((4096,), eps=1e-05)
+      )
+    )
+    (norm): LlamaRMSNorm((4096,), eps=1e-05)
+    (rotary_emb): LlamaRotaryEmbedding()
+  )
+  (lm_head): Linear(in_features=4096, out_features=32000, bias=False)
+)
+disable_tqdm True
+Loading checkpoints:   0%|          | 0/32 [00:00<?, ?it/s]Loading checkpoints:   3%|▎         | 1/32 [00:02<01:06,  2.13s/it]Loading checkpoints:   3%|▎         | 1/32 [00:02<01:10,  2.27s/it]Loading checkpoints:   6%|▋         | 2/32 [00:03<00:53,  1.77s/it]Loading checkpoints:   6%|▋         | 2/32 [00:03<00:57,  1.91s/it]Loading checkpoints:   9%|▉         | 3/32 [00:05<00:48,  1.68s/it]Loading checkpoints:   9%|▉         | 3/32 [00:05<00:52,  1.79s/it]Loading checkpoints:  12%|█▎        | 4/32 [00:06<00:45,  1.63s/it]Loading checkpoints:  16%|█▌        | 5/32 [00:08<00:43,  1.61s/it]Loading checkpoints:  12%|█▎        | 4/32 [00:07<00:49,  1.76s/it]Loading checkpoints:  19%|█▉        | 6/32 [00:09<00:40,  1.58s/it]Loading checkpoints:  16%|█▌        | 5/32 [00:08<00:45,  1.70s/it]Loading checkpoints:  22%|██▏       | 7/32 [00:11<00:39,  1.57s/it]Loading checkpoints:  19%|█▉        | 6/32 [00:10<00:44,  1.70s/it]Loading checkpoints:  25%|██▌       | 8/32 [00:13<00:38,  1.60s/it]Loading checkpoints:  22%|██▏       | 7/32 [00:12<00:42,  1.71s/it]Loading checkpoints:  28%|██▊       | 9/32 [00:14<00:36,  1.59s/it]Loading checkpoints:  25%|██▌       | 8/32 [00:13<00:40,  1.70s/it]Loading checkpoints:  31%|███▏      | 10/32 [00:16<00:34,  1.58s/it]Loading checkpoints:  28%|██▊       | 9/32 [00:15<00:39,  1.70s/it]Loading checkpoints:  34%|███▍      | 11/32 [00:17<00:32,  1.57s/it]Loading checkpoints:  31%|███▏      | 10/32 [00:17<00:37,  1.71s/it]Loading checkpoints:  38%|███▊      | 12/32 [00:19<00:31,  1.59s/it]Loading checkpoints:  34%|███▍      | 11/32 [00:19<00:36,  1.73s/it]Loading checkpoints:  41%|████      | 13/32 [00:21<00:31,  1.63s/it]Loading checkpoints:  38%|███▊      | 12/32 [00:20<00:33,  1.69s/it]Loading checkpoints:  44%|████▍     | 14/32 [00:22<00:28,  1.60s/it]Loading checkpoints:  41%|████      | 13/32 [00:22<00:30,  1.63s/it]Loading checkpoints:  47%|████▋     | 15/32 [00:24<00:27,  1.59s/it]Loading checkpoints:  44%|████▍     | 14/32 [00:23<00:29,  1.61s/it]Loading checkpoints:  50%|█████     | 16/32 [00:25<00:25,  1.61s/it]Loading checkpoints:  47%|████▋     | 15/32 [00:25<00:27,  1.61s/it]Loading checkpoints:  53%|█████▎    | 17/32 [00:27<00:23,  1.58s/it]Loading checkpoints:  50%|█████     | 16/32 [00:26<00:25,  1.58s/it]Loading checkpoints:  56%|█████▋    | 18/32 [00:28<00:21,  1.55s/it]Loading checkpoints:  53%|█████▎    | 17/32 [00:28<00:24,  1.62s/it]Loading checkpoints:  59%|█████▉    | 19/32 [00:30<00:20,  1.60s/it]Loading checkpoints:  56%|█████▋    | 18/32 [00:30<00:22,  1.64s/it]Loading checkpoints:  62%|██████▎   | 20/32 [00:32<00:19,  1.59s/it]Loading checkpoints:  59%|█████▉    | 19/32 [00:31<00:20,  1.61s/it]Loading checkpoints:  66%|██████▌   | 21/32 [00:33<00:17,  1.57s/it]Loading checkpoints:  62%|██████▎   | 20/32 [00:33<00:19,  1.61s/it]Loading checkpoints:  69%|██████▉   | 22/32 [00:35<00:16,  1.60s/it]Loading checkpoints:  66%|██████▌   | 21/32 [00:35<00:17,  1.62s/it]Loading checkpoints:  72%|███████▏  | 23/32 [00:36<00:14,  1.58s/it]Loading checkpoints:  69%|██████▉   | 22/32 [00:36<00:15,  1.59s/it]Loading checkpoints:  75%|███████▌  | 24/32 [00:38<00:12,  1.57s/it]Loading checkpoints:  72%|███████▏  | 23/32 [00:38<00:14,  1.58s/it]Loading checkpoints:  78%|███████▊  | 25/32 [00:40<00:11,  1.57s/it]Loading checkpoints:  75%|███████▌  | 24/32 [00:39<00:12,  1.57s/it]Loading checkpoints:  81%|████████▏ | 26/32 [00:41<00:09,  1.57s/it]Loading checkpoints:  78%|███████▊  | 25/32 [00:41<00:10,  1.54s/it]Loading checkpoints:  84%|████████▍ | 27/32 [00:43<00:07,  1.53s/it]Loading checkpoints:  81%|████████▏ | 26/32 [00:42<00:09,  1.54s/it]Loading checkpoints:  88%|████████▊ | 28/32 [00:44<00:06,  1.53s/it]Loading checkpoints:  84%|████████▍ | 27/32 [00:44<00:07,  1.54s/it]Loading checkpoints:  91%|█████████ | 29/32 [00:46<00:04,  1.53s/it]Loading checkpoints:  88%|████████▊ | 28/32 [00:45<00:06,  1.54s/it]Loading checkpoints:  94%|█████████▍| 30/32 [00:47<00:03,  1.55s/it]Loading checkpoints:  91%|█████████ | 29/32 [00:47<00:04,  1.54s/it]Loading checkpoints:  97%|█████████▋| 31/32 [00:49<00:01,  1.60s/it]Loading checkpoints:  94%|█████████▍| 30/32 [00:48<00:03,  1.55s/it]Loading checkpoints: 100%|██████████| 32/32 [00:50<00:00,  1.59s/it]Loading checkpoints: 100%|██████████| 32/32 [00:50<00:00,  1.59s/it]
+Loading checkpoints:  97%|█████████▋| 31/32 [00:50<00:01,  1.54s/it]Loading checkpoints: 100%|██████████| 32/32 [00:52<00:00,  1.54s/it]Loading checkpoints: 100%|██████████| 32/32 [00:52<00:00,  1.63s/it]
+torch.Size([1, 1048576])
+Evaluating ...
+nsamples 83
+testenc.numel() 341469
+Perplexity: 7.479322
+Evaluating ...
+nsamples 256
+testenc.numel() 1048576
+Perplexity: 9.578395
+disable_tqdm True
+Loading checkpoints:   0%|          | 0/32 [00:00<?, ?it/s]Loading checkpoints:   3%|▎         | 1/32 [00:03<01:50,  3.58s/it]Loading checkpoints: 100%|██████████| 32/32 [00:03<00:00,  8.86it/s]
+Evaluating ...
+nsamples 83
+testenc.numel() 341469
+Perplexity: 7.476156
+Evaluating ...
+nsamples 256
+testenc.numel() 1048576
+Perplexity: 9.571747
+layer 0, dataset wikitext2, ppl: 7.476156234741211, ppl_best: 7.4793219566345215
+layer 0, dataset c4, ppl: 9.571746826171875, ppl_best: 9.578394889831543
+this layer is good
+disable_tqdm True
+Loading checkpoints:   0%|          | 0/32 [00:00<?, ?it/s]Loading checkpoints:   6%|▋         | 2/32 [00:03<00:47,  1.59s/it]Loading checkpoints: 100%|██████████| 32/32 [00:03<00:00,  9.98it/s]
+Evaluating ...
+nsamples 83
+testenc.numel() 341469
+Perplexity: 7.421293
+Evaluating ...
+nsamples 256
+testenc.numel() 1048576
+Perplexity: 9.531212
+layer 1, dataset wikitext2, ppl: 7.421293258666992, ppl_best: 7.476156234741211
+layer 1, dataset c4, ppl: 9.531211853027344, ppl_best: 9.571746826171875
+this layer is good
+disable_tqdm True
+Loading checkpoints:   0%|          | 0/32 [00:00<?, ?it/s]Loading checkpoints:   9%|▉         | 3/32 [00:03<00:31,  1.08s/it]Loading checkpoints: 100%|██████████| 32/32 [00:03<00:00,  9.80it/s]
+Evaluating ...
+nsamples 83
+testenc.numel() 341469
+Perplexity: 7.433614
+Evaluating ...
+nsamples 256
+testenc.numel() 1048576
+Perplexity: 9.517897
+layer 2, dataset wikitext2, ppl: 7.433614253997803, ppl_best: 7.421293258666992
+this layer is bad
+disable_tqdm True
+Loading checkpoints:   0%|          | 0/32 [00:00<?, ?it/s]Loading checkpoints:   9%|▉         | 3/32 [00:02<00:23,  1.23it/s]Loading checkpoints: 100%|██████████| 32/32 [00:02<00:00, 13.03it/s]
+Evaluating ...
+Traceback (most recent call last):
+  File "/data/lliu/huffman/basterdized_examine.py", line 122, in <module>
+    ppl[dataset] = llama_eval(model, testloader, "cuda:0", dataset, False,
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lliu/anaconda3/lib/python3.11/site-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/data/lliu/huffman/perplexity_eval.py", line 184, in llama_eval
+    testenc = testenc.input_ids
+              ^^^^^^^^^^^^^^^^^
+AttributeError: 'str' object has no attribute 'input_ids'

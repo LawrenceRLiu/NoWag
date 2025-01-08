@@ -1,0 +1,432 @@
+========== NON BASTERDIZED ==========
+pid 476006
+/home/lliu/anaconda3/lib/python3.11/site-packages/torch/jit/annotations.py:389: UserWarning: TorchScript will treat type annotations of Tensor dtype-specific subtypes as if they are normal Tensors. dtype constraints are not enforced in compilation either.
+  warnings.warn(
+/home/lliu/anaconda3/lib/python3.11/site-packages/torch/jit/annotations.py:389: UserWarning: TorchScript will treat type annotations of Tensor dtype-specific subtypes as if they are normal Tensors. dtype constraints are not enforced in compilation either.
+  warnings.warn(
+/home/lliu/anaconda3/lib/python3.11/site-packages/pandas/core/arrays/masked.py:60: UserWarning: Pandas requires version '1.3.6' or newer of 'bottleneck' (version '1.3.5' currently installed).
+  from pandas.core import (
+/home/lliu/anaconda3/lib/python3.11/site-packages/pandas/core/arrays/masked.py:60: UserWarning: Pandas requires version '1.3.6' or newer of 'bottleneck' (version '1.3.5' currently installed).
+  from pandas.core import (
+2025-01-07 12:04:11.831859: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:485] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2025-01-07 12:04:11.850214: E external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:8454] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+2025-01-07 12:04:11.856476: E external/local_xla/xla/stream_executor/cuda/cuda_blas.cc:1452] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+2025-01-07 12:04:11.872139: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2025-01-07 12:04:11.875259: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:485] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2025-01-07 12:04:11.893402: E external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:8454] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+2025-01-07 12:04:11.903109: E external/local_xla/xla/stream_executor/cuda/cuda_blas.cc:1452] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+2025-01-07 12:04:11.918822: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2025-01-07 12:04:12.923773: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+2025-01-07 12:04:13.033728: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:00<00:00,  4.31it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:00<00:00,  4.30it/s]Loading checkpoint shards: 100%|██████████| 2/2 [00:00<00:00,  4.72it/s]Loading checkpoint shards: 100%|██████████| 2/2 [00:00<00:00,  4.65it/s]
+Loading checkpoints:   0%|          | 0/32 [00:00<?, ?it/s]Loading checkpoint shards: 100%|██████████| 2/2 [00:00<00:00,  3.88it/s]Loading checkpoint shards: 100%|██████████| 2/2 [00:00<00:00,  3.93it/s]
+Model loaded. LlamaForCausalLM(
+  (model): LlamaModel(
+    (embed_tokens): Embedding(32000, 4096)
+    (layers): ModuleList(
+      (0-31): 32 x LlamaDecoderLayer(
+        (self_attn): LlamaSdpaAttention(
+          (q_proj): Linear(in_features=4096, out_features=4096, bias=False)
+          (k_proj): Linear(in_features=4096, out_features=4096, bias=False)
+          (v_proj): Linear(in_features=4096, out_features=4096, bias=False)
+          (o_proj): Linear(in_features=4096, out_features=4096, bias=False)
+          (rotary_emb): LlamaRotaryEmbedding()
+        )
+        (mlp): LlamaMLP(
+          (gate_proj): Linear(in_features=4096, out_features=11008, bias=False)
+          (up_proj): Linear(in_features=4096, out_features=11008, bias=False)
+          (down_proj): Linear(in_features=11008, out_features=4096, bias=False)
+          (act_fn): SiLU()
+        )
+        (input_layernorm): LlamaRMSNorm((4096,), eps=1e-05)
+        (post_attention_layernorm): LlamaRMSNorm((4096,), eps=1e-05)
+      )
+    )
+    (norm): LlamaRMSNorm((4096,), eps=1e-05)
+    (rotary_emb): LlamaRotaryEmbedding()
+  )
+  (lm_head): Linear(in_features=4096, out_features=32000, bias=False)
+)
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:00<00:00,  3.88it/s]Loading checkpoint shards: 100%|██████████| 2/2 [00:00<00:00,  4.00it/s]Loading checkpoint shards: 100%|██████████| 2/2 [00:00<00:00,  3.98it/s]
+Model loaded. LlamaForCausalLM(
+  (model): LlamaModel(
+    (embed_tokens): Embedding(32000, 4096)
+    (layers): ModuleList(
+      (0-31): 32 x LlamaDecoderLayer(
+        (self_attn): LlamaSdpaAttention(
+          (q_proj): Linear(in_features=4096, out_features=4096, bias=False)
+          (k_proj): Linear(in_features=4096, out_features=4096, bias=False)
+          (v_proj): Linear(in_features=4096, out_features=4096, bias=False)
+          (o_proj): Linear(in_features=4096, out_features=4096, bias=False)
+          (rotary_emb): LlamaRotaryEmbedding()
+        )
+        (mlp): LlamaMLP(
+          (gate_proj): Linear(in_features=4096, out_features=11008, bias=False)
+          (up_proj): Linear(in_features=4096, out_features=11008, bias=False)
+          (down_proj): Linear(in_features=11008, out_features=4096, bias=False)
+          (act_fn): SiLU()
+        )
+        (input_layernorm): LlamaRMSNorm((4096,), eps=1e-05)
+        (post_attention_layernorm): LlamaRMSNorm((4096,), eps=1e-05)
+      )
+    )
+    (norm): LlamaRMSNorm((4096,), eps=1e-05)
+    (rotary_emb): LlamaRotaryEmbedding()
+  )
+  (lm_head): Linear(in_features=4096, out_features=32000, bias=False)
+)
+disable_tqdm True
+Loading checkpoints:   0%|          | 0/32 [00:00<?, ?it/s]Loading checkpoints:   3%|▎         | 1/32 [00:02<01:13,  2.36s/it]Loading checkpoints:   3%|▎         | 1/32 [00:02<01:10,  2.27s/it]Loading checkpoints:   6%|▋         | 2/32 [00:03<00:55,  1.87s/it]Loading checkpoints:   6%|▋         | 2/32 [00:03<00:55,  1.86s/it]Loading checkpoints:   9%|▉         | 3/32 [00:05<00:49,  1.69s/it]Loading checkpoints:   9%|▉         | 3/32 [00:05<00:50,  1.76s/it]Loading checkpoints:  12%|█▎        | 4/32 [00:06<00:45,  1.62s/it]Loading checkpoints:  12%|█▎        | 4/32 [00:07<00:47,  1.69s/it]Loading checkpoints:  16%|█▌        | 5/32 [00:08<00:42,  1.57s/it]Loading checkpoints:  16%|█▌        | 5/32 [00:08<00:43,  1.61s/it]Loading checkpoints:  19%|█▉        | 6/32 [00:09<00:40,  1.56s/it]Loading checkpoints:  19%|█▉        | 6/32 [00:10<00:41,  1.58s/it]Loading checkpoints:  22%|██▏       | 7/32 [00:11<00:39,  1.56s/it]Loading checkpoints:  22%|██▏       | 7/32 [00:11<00:39,  1.57s/it]Loading checkpoints:  25%|██▌       | 8/32 [00:12<00:37,  1.55s/it]Loading checkpoints:  25%|██▌       | 8/32 [00:13<00:37,  1.55s/it]Loading checkpoints:  28%|██▊       | 9/32 [00:14<00:35,  1.55s/it]Loading checkpoints:  28%|██▊       | 9/32 [00:14<00:34,  1.52s/it]Loading checkpoints:  31%|███▏      | 10/32 [00:15<00:33,  1.51s/it]Loading checkpoints:  31%|███▏      | 10/32 [00:16<00:32,  1.50s/it]Loading checkpoints:  34%|███▍      | 11/32 [00:17<00:31,  1.50s/it]Loading checkpoints:  34%|███▍      | 11/32 [00:17<00:31,  1.50s/it]Loading checkpoints:  38%|███▊      | 12/32 [00:18<00:29,  1.50s/it]Loading checkpoints:  38%|███▊      | 12/32 [00:19<00:30,  1.50s/it]Loading checkpoints:  41%|████      | 13/32 [00:20<00:28,  1.49s/it]Loading checkpoints:  41%|████      | 13/32 [00:20<00:29,  1.53s/it]Loading checkpoints:  44%|████▍     | 14/32 [00:21<00:27,  1.51s/it]Loading checkpoints:  44%|████▍     | 14/32 [00:22<00:27,  1.52s/it]Loading checkpoints:  47%|████▋     | 15/32 [00:23<00:25,  1.50s/it]Loading checkpoints:  47%|████▋     | 15/32 [00:23<00:25,  1.53s/it]Loading checkpoints:  50%|█████     | 16/32 [00:24<00:24,  1.50s/it]Loading checkpoints:  50%|█████     | 16/32 [00:25<00:24,  1.52s/it]Loading checkpoints:  53%|█████▎    | 17/32 [00:26<00:22,  1.51s/it]Loading checkpoints:  53%|█████▎    | 17/32 [00:26<00:23,  1.54s/it]Loading checkpoints:  56%|█████▋    | 18/32 [00:27<00:21,  1.52s/it]Loading checkpoints:  56%|█████▋    | 18/32 [00:28<00:21,  1.55s/it]Loading checkpoints:  59%|█████▉    | 19/32 [00:29<00:19,  1.49s/it]Loading checkpoints:  59%|█████▉    | 19/32 [00:29<00:20,  1.54s/it]Loading checkpoints:  62%|██████▎   | 20/32 [00:30<00:17,  1.49s/it]Loading checkpoints:  62%|██████▎   | 20/32 [00:31<00:18,  1.54s/it]Loading checkpoints:  66%|██████▌   | 21/32 [00:32<00:16,  1.49s/it]Loading checkpoints:  66%|██████▌   | 21/32 [00:32<00:16,  1.52s/it]Loading checkpoints:  69%|██████▉   | 22/32 [00:33<00:14,  1.49s/it]Loading checkpoints:  69%|██████▉   | 22/32 [00:34<00:15,  1.53s/it]Loading checkpoints:  72%|███████▏  | 23/32 [00:35<00:13,  1.49s/it]Loading checkpoints:  72%|███████▏  | 23/32 [00:35<00:13,  1.50s/it]Loading checkpoints:  75%|███████▌  | 24/32 [00:36<00:11,  1.48s/it]Loading checkpoints:  75%|███████▌  | 24/32 [00:37<00:11,  1.49s/it]Loading checkpoints:  78%|███████▊  | 25/32 [00:38<00:10,  1.48s/it]Loading checkpoints:  78%|███████▊  | 25/32 [00:38<00:10,  1.49s/it]Loading checkpoints:  81%|████████▏ | 26/32 [00:39<00:08,  1.47s/it]Loading checkpoints:  81%|████████▏ | 26/32 [00:40<00:09,  1.50s/it]Loading checkpoints:  84%|████████▍ | 27/32 [00:41<00:07,  1.49s/it]Loading checkpoints:  84%|████████▍ | 27/32 [00:41<00:07,  1.51s/it]Loading checkpoints:  88%|████████▊ | 28/32 [00:42<00:06,  1.51s/it]Loading checkpoints:  91%|█████████ | 29/32 [00:44<00:04,  1.50s/it]Loading checkpoints:  88%|████████▊ | 28/32 [00:43<00:06,  1.53s/it]Loading checkpoints:  94%|█████████▍| 30/32 [00:45<00:02,  1.47s/it]Loading checkpoints:  91%|█████████ | 29/32 [00:44<00:04,  1.52s/it]Loading checkpoints:  97%|█████████▋| 31/32 [00:47<00:01,  1.45s/it]Loading checkpoints:  94%|█████████▍| 30/32 [00:46<00:03,  1.52s/it]Loading checkpoints: 100%|██████████| 32/32 [00:48<00:00,  1.47s/it]Loading checkpoints: 100%|██████████| 32/32 [00:48<00:00,  1.52s/it]
+Loading checkpoints:  97%|█████████▋| 31/32 [00:48<00:01,  1.55s/it]Loading checkpoints: 100%|██████████| 32/32 [00:49<00:00,  1.60s/it]Loading checkpoints: 100%|██████████| 32/32 [00:49<00:00,  1.56s/it]
+Evaluating ...
+nsamples 83
+testenc.numel() 341469
+Perplexity: 7.479322
+disable_tqdm True
+Loading checkpoints:   0%|          | 0/32 [00:00<?, ?it/s]Loading checkpoints:   3%|▎         | 1/32 [00:02<01:28,  2.85s/it]Loading checkpoints: 100%|██████████| 32/32 [00:02<00:00, 11.11it/s]
+Evaluating ...
+nsamples 83
+testenc.numel() 341469
+Perplexity: 7.476156
+layer 0, dataset wikitext2, ppl: 7.476156234741211, ppl_best: 7.4793219566345215
+this layer is good
+disable_tqdm True
+Loading checkpoints:   0%|          | 0/32 [00:00<?, ?it/s]Loading checkpoints:   6%|▋         | 2/32 [00:02<00:39,  1.31s/it]Loading checkpoints: 100%|██████████| 32/32 [00:02<00:00, 12.02it/s]
+Evaluating ...
+nsamples 83
+testenc.numel() 341469
+Perplexity: 7.421293
+layer 1, dataset wikitext2, ppl: 7.421293258666992, ppl_best: 7.476156234741211
+this layer is good
+disable_tqdm True
+Loading checkpoints:   0%|          | 0/32 [00:00<?, ?it/s]Loading checkpoints:   9%|▉         | 3/32 [00:03<00:30,  1.05s/it]Loading checkpoints: 100%|██████████| 32/32 [00:03<00:00, 10.10it/s]
+Evaluating ...
+nsamples 83
+testenc.numel() 341469
+Perplexity: 7.433614
+layer 2, dataset wikitext2, ppl: 7.433614253997803, ppl_best: 7.421293258666992
+this layer is bad
+disable_tqdm True
+Loading checkpoints:   0%|          | 0/32 [00:00<?, ?it/s]Loading checkpoints:   9%|▉         | 3/32 [00:02<00:19,  1.50it/s]Loading checkpoints: 100%|██████████| 32/32 [00:02<00:00, 15.71it/s]
+Evaluating ...
+nsamples 83
+testenc.numel() 341469
+Perplexity: 7.421293
+disable_tqdm True
+Loading checkpoints:   0%|          | 0/32 [00:00<?, ?it/s]Loading checkpoints:  12%|█▎        | 4/32 [00:03<00:22,  1.22it/s]Loading checkpoints: 100%|██████████| 32/32 [00:03<00:00,  9.68it/s]
+Evaluating ...
+nsamples 83
+testenc.numel() 341469
+Perplexity: 7.463499
+layer 3, dataset wikitext2, ppl: 7.463498592376709, ppl_best: 7.421293258666992
+this layer is bad
+disable_tqdm True
+Loading checkpoints:   0%|          | 0/32 [00:00<?, ?it/s]Loading checkpoints:  12%|█▎        | 4/32 [00:01<00:13,  2.10it/s]Loading checkpoints: 100%|██████████| 32/32 [00:01<00:00, 16.50it/s]
+Evaluating ...
+nsamples 83
+testenc.numel() 341469
+Perplexity: 7.421293
+disable_tqdm True
+Loading checkpoints:   0%|          | 0/32 [00:00<?, ?it/s]Loading checkpoints:  16%|█▌        | 5/32 [00:03<00:18,  1.48it/s]Loading checkpoints: 100%|██████████| 32/32 [00:03<00:00,  9.35it/s]
+Evaluating ...
+nsamples 83
+testenc.numel() 341469
+Perplexity: 7.517436
+layer 4, dataset wikitext2, ppl: 7.517435550689697, ppl_best: 7.421293258666992
+this layer is bad
+disable_tqdm True
+Loading checkpoints:   0%|          | 0/32 [00:00<?, ?it/s]Loading checkpoints:  16%|█▌        | 5/32 [00:01<00:09,  2.89it/s]Loading checkpoints: 100%|██████████| 32/32 [00:01<00:00, 18.14it/s]
+Evaluating ...
+nsamples 83
+testenc.numel() 341469
+Perplexity: 7.421293
+disable_tqdm True
+Loading checkpoints:   0%|          | 0/32 [00:00<?, ?it/s]Loading checkpoints:  19%|█▉        | 6/32 [00:03<00:13,  1.97it/s]Loading checkpoints: 100%|██████████| 32/32 [00:03<00:00, 10.40it/s]
+Evaluating ...
+nsamples 83
+testenc.numel() 341469
+Perplexity: 7.455337
+layer 5, dataset wikitext2, ppl: 7.455337047576904, ppl_best: 7.421293258666992
+this layer is bad
+disable_tqdm True
+Loading checkpoints:   0%|          | 0/32 [00:00<?, ?it/s]Loading checkpoints:  19%|█▉        | 6/32 [00:01<00:07,  3.51it/s]Loading checkpoints: 100%|██████████| 32/32 [00:01<00:00, 18.37it/s]
+Evaluating ...
+nsamples 83
+testenc.numel() 341469
+Perplexity: 7.421293
+disable_tqdm True
+Loading checkpoints:   0%|          | 0/32 [00:00<?, ?it/s]Loading checkpoints:  22%|██▏       | 7/32 [00:03<00:10,  2.29it/s]Loading checkpoints: 100%|██████████| 32/32 [00:03<00:00, 10.34it/s]
+Evaluating ...
+nsamples 83
+testenc.numel() 341469
+Perplexity: 7.399061
+layer 6, dataset wikitext2, ppl: 7.3990607261657715, ppl_best: 7.421293258666992
+this layer is good
+disable_tqdm True
+Loading checkpoints:   0%|          | 0/32 [00:00<?, ?it/s]Loading checkpoints:  25%|██▌       | 8/32 [00:03<00:09,  2.61it/s]Loading checkpoints: 100%|██████████| 32/32 [00:03<00:00, 10.36it/s]
+Evaluating ...
+nsamples 83
+testenc.numel() 341469
+Perplexity: 7.413788
+layer 7, dataset wikitext2, ppl: 7.413787841796875, ppl_best: 7.3990607261657715
+this layer is bad
+disable_tqdm True
+Loading checkpoints:   0%|          | 0/32 [00:00<?, ?it/s]Loading checkpoints:  25%|██▌       | 8/32 [00:01<00:05,  4.74it/s]Loading checkpoints: 100%|██████████| 32/32 [00:01<00:00, 18.62it/s]
+Evaluating ...
+nsamples 83
+testenc.numel() 341469
+Perplexity: 7.399061
+disable_tqdm True
+Loading checkpoints:   0%|          | 0/32 [00:00<?, ?it/s]Loading checkpoints:  28%|██▊       | 9/32 [00:03<00:07,  2.96it/s]Loading checkpoints: 100%|██████████| 32/32 [00:03<00:00, 10.41it/s]
+Evaluating ...
+nsamples 83
+testenc.numel() 341469
+Perplexity: 7.437290
+layer 8, dataset wikitext2, ppl: 7.437289714813232, ppl_best: 7.3990607261657715
+this layer is bad
+disable_tqdm True
+Loading checkpoints:   0%|          | 0/32 [00:00<?, ?it/s]Loading checkpoints:  28%|██▊       | 9/32 [00:01<00:04,  5.24it/s]Loading checkpoints: 100%|██████████| 32/32 [00:01<00:00, 18.28it/s]
+Evaluating ...
+nsamples 83
+testenc.numel() 341469
+Perplexity: 7.399061
+disable_tqdm True
+Loading checkpoints:   0%|          | 0/32 [00:00<?, ?it/s]Loading checkpoints:  31%|███▏      | 10/32 [00:03<00:06,  3.24it/s]Loading checkpoints: 100%|██████████| 32/32 [00:03<00:00, 10.27it/s]
+Evaluating ...
+nsamples 83
+testenc.numel() 341469
+Perplexity: 7.382711
+layer 9, dataset wikitext2, ppl: 7.382711410522461, ppl_best: 7.3990607261657715
+this layer is good
+disable_tqdm True
+Loading checkpoints:   0%|          | 0/32 [00:00<?, ?it/s]Loading checkpoints:  34%|███▍      | 11/32 [00:03<00:05,  3.66it/s]Loading checkpoints: 100%|██████████| 32/32 [00:03<00:00, 10.54it/s]
+Evaluating ...
+nsamples 83
+testenc.numel() 341469
+Perplexity: 7.411868
+layer 10, dataset wikitext2, ppl: 7.411868095397949, ppl_best: 7.382711410522461
+this layer is bad
+disable_tqdm True
+Loading checkpoints:   0%|          | 0/32 [00:00<?, ?it/s]Loading checkpoints:  34%|███▍      | 11/32 [00:01<00:03,  6.61it/s]Loading checkpoints: 100%|██████████| 32/32 [00:01<00:00, 18.88it/s]
+Evaluating ...
+nsamples 83
+testenc.numel() 341469
+Perplexity: 7.382711
+disable_tqdm True
+Loading checkpoints:   0%|          | 0/32 [00:00<?, ?it/s]Loading checkpoints:  38%|███▊      | 12/32 [00:02<00:04,  4.03it/s]Loading checkpoints: 100%|██████████| 32/32 [00:03<00:00, 10.64it/s]
+Evaluating ...
+nsamples 83
+testenc.numel() 341469
+Perplexity: 7.338458
+layer 11, dataset wikitext2, ppl: 7.3384575843811035, ppl_best: 7.382711410522461
+this layer is good
+disable_tqdm True
+Loading checkpoints:   0%|          | 0/32 [00:00<?, ?it/s]Loading checkpoints:  41%|████      | 13/32 [00:03<00:04,  4.33it/s]Loading checkpoints: 100%|██████████| 32/32 [00:03<00:00, 10.56it/s]
+Evaluating ...
+nsamples 83
+testenc.numel() 341469
+Perplexity: 7.355660
+layer 12, dataset wikitext2, ppl: 7.3556599617004395, ppl_best: 7.3384575843811035
+this layer is bad
+disable_tqdm True
+Loading checkpoints:   0%|          | 0/32 [00:00<?, ?it/s]Loading checkpoints:  41%|████      | 13/32 [00:01<00:02,  7.59it/s]Loading checkpoints: 100%|██████████| 32/32 [00:01<00:00, 18.35it/s]
+Evaluating ...
+nsamples 83
+testenc.numel() 341469
+Perplexity: 7.338458
+disable_tqdm True
+Loading checkpoints:   0%|          | 0/32 [00:00<?, ?it/s]Loading checkpoints:  44%|████▍     | 14/32 [00:02<00:03,  4.70it/s]Loading checkpoints: 100%|██████████| 32/32 [00:03<00:00, 10.65it/s]
+Evaluating ...
+nsamples 83
+testenc.numel() 341469
+Perplexity: 7.334141
+layer 13, dataset wikitext2, ppl: 7.334141254425049, ppl_best: 7.3384575843811035
+this layer is good
+disable_tqdm True
+Loading checkpoints:   0%|          | 0/32 [00:00<?, ?it/s]Loading checkpoints:  47%|████▋     | 15/32 [00:02<00:03,  5.04it/s]Loading checkpoints: 100%|██████████| 32/32 [00:03<00:00, 10.66it/s]
+Evaluating ...
+nsamples 83
+testenc.numel() 341469
+Perplexity: 7.332157
+layer 14, dataset wikitext2, ppl: 7.332157135009766, ppl_best: 7.334141254425049
+this layer is good
+disable_tqdm True
+Loading checkpoints:   0%|          | 0/32 [00:00<?, ?it/s]Loading checkpoints:  50%|█████     | 16/32 [00:02<00:02,  5.44it/s]Loading checkpoints: 100%|██████████| 32/32 [00:02<00:00, 10.77it/s]
+Evaluating ...
+nsamples 83
+testenc.numel() 341469
+Perplexity: 7.326983
+layer 15, dataset wikitext2, ppl: 7.3269829750061035, ppl_best: 7.332157135009766
+this layer is good
+disable_tqdm True
+Loading checkpoints:   0%|          | 0/32 [00:00<?, ?it/s]Loading checkpoints:  53%|█████▎    | 17/32 [00:02<00:02,  5.70it/s]Loading checkpoints: 100%|██████████| 32/32 [00:03<00:00, 10.64it/s]
+Evaluating ...
+nsamples 83
+testenc.numel() 341469
+Perplexity: 7.336041
+layer 16, dataset wikitext2, ppl: 7.33604097366333, ppl_best: 7.3269829750061035
+this layer is bad
+disable_tqdm True
+Loading checkpoints:   0%|          | 0/32 [00:00<?, ?it/s]Loading checkpoints:  53%|█████▎    | 17/32 [00:01<00:01, 10.80it/s]Loading checkpoints: 100%|██████████| 32/32 [00:01<00:00, 19.94it/s]
+Evaluating ...
+nsamples 83
+testenc.numel() 341469
+Perplexity: 7.326983
+disable_tqdm True
+Loading checkpoints:   0%|          | 0/32 [00:00<?, ?it/s]Loading checkpoints:  56%|█████▋    | 18/32 [00:02<00:02,  6.00it/s]Loading checkpoints: 100%|██████████| 32/32 [00:03<00:00, 10.57it/s]
+Evaluating ...
+nsamples 83
+testenc.numel() 341469
+Perplexity: 7.311310
+layer 17, dataset wikitext2, ppl: 7.311309814453125, ppl_best: 7.3269829750061035
+this layer is good
+disable_tqdm True
+Loading checkpoints:   0%|          | 0/32 [00:00<?, ?it/s]Loading checkpoints:  59%|█████▉    | 19/32 [00:03<00:02,  6.22it/s]Loading checkpoints: 100%|██████████| 32/32 [00:03<00:00, 10.39it/s]
+Evaluating ...
+nsamples 83
+testenc.numel() 341469
+Perplexity: 7.311310
+layer 18, dataset wikitext2, ppl: 7.311309814453125, ppl_best: 7.311309814453125
+this layer is good
+disable_tqdm True
+Loading checkpoints:   0%|          | 0/32 [00:00<?, ?it/s]Loading checkpoints:  62%|██████▎   | 20/32 [00:02<00:01,  6.73it/s]Loading checkpoints: 100%|██████████| 32/32 [00:02<00:00, 10.68it/s]
+Evaluating ...
+nsamples 83
+testenc.numel() 341469
+Perplexity: 7.316731
+layer 19, dataset wikitext2, ppl: 7.3167314529418945, ppl_best: 7.311309814453125
+this layer is bad
+disable_tqdm True
+Loading checkpoints:   0%|          | 0/32 [00:00<?, ?it/s]Loading checkpoints:  62%|██████▎   | 20/32 [00:01<00:00, 12.12it/s]Loading checkpoints: 100%|██████████| 32/32 [00:01<00:00, 19.02it/s]
+Evaluating ...
+nsamples 83
+testenc.numel() 341469
+Perplexity: 7.311310
+disable_tqdm True
+Loading checkpoints:   0%|          | 0/32 [00:00<?, ?it/s]Loading checkpoints:  66%|██████▌   | 21/32 [00:03<00:01,  6.77it/s]Loading checkpoints: 100%|██████████| 32/32 [00:03<00:00, 10.22it/s]
+Evaluating ...
+nsamples 83
+testenc.numel() 341469
+Perplexity: 7.316215
+layer 20, dataset wikitext2, ppl: 7.3162150382995605, ppl_best: 7.311309814453125
+this layer is bad
+disable_tqdm True
+Loading checkpoints:   0%|          | 0/32 [00:00<?, ?it/s]Loading checkpoints:  66%|██████▌   | 21/32 [00:01<00:00, 13.02it/s]Loading checkpoints: 100%|██████████| 32/32 [00:01<00:00, 19.48it/s]
+Evaluating ...
+nsamples 83
+testenc.numel() 341469
+Perplexity: 7.311310
+disable_tqdm True
+Loading checkpoints:   0%|          | 0/32 [00:00<?, ?it/s]Loading checkpoints:  69%|██████▉   | 22/32 [00:02<00:01,  7.40it/s]Loading checkpoints: 100%|██████████| 32/32 [00:03<00:00, 10.67it/s]
+Evaluating ...
+nsamples 83
+testenc.numel() 341469
+Perplexity: 7.307785
+layer 21, dataset wikitext2, ppl: 7.307784557342529, ppl_best: 7.311309814453125
+this layer is good
+disable_tqdm True
+Loading checkpoints:   0%|          | 0/32 [00:00<?, ?it/s]Loading checkpoints:  72%|███████▏  | 23/32 [00:02<00:01,  7.82it/s]Loading checkpoints: 100%|██████████| 32/32 [00:02<00:00, 10.79it/s]
+Evaluating ...
+nsamples 83
+testenc.numel() 341469
+Perplexity: 7.278266
+layer 22, dataset wikitext2, ppl: 7.278266429901123, ppl_best: 7.307784557342529
+this layer is good
+disable_tqdm True
+Loading checkpoints:   0%|          | 0/32 [00:00<?, ?it/s]Loading checkpoints:  75%|███████▌  | 24/32 [00:02<00:00,  8.29it/s]Loading checkpoints: 100%|██████████| 32/32 [00:02<00:00, 10.95it/s]
+Evaluating ...
+nsamples 83
+testenc.numel() 341469
+Perplexity: 7.280750
+layer 23, dataset wikitext2, ppl: 7.280749797821045, ppl_best: 7.278266429901123
+this layer is bad
+disable_tqdm True
+Loading checkpoints:   0%|          | 0/32 [00:00<?, ?it/s]Loading checkpoints:  75%|███████▌  | 24/32 [00:01<00:00, 13.96it/s]Loading checkpoints: 100%|██████████| 32/32 [00:01<00:00, 18.30it/s]
+Evaluating ...
+nsamples 83
+testenc.numel() 341469
+Perplexity: 7.278266
+disable_tqdm True
+Loading checkpoints:   0%|          | 0/32 [00:00<?, ?it/s]Loading checkpoints:  78%|███████▊  | 25/32 [00:03<00:00,  8.32it/s]Loading checkpoints: 100%|██████████| 32/32 [00:03<00:00, 10.56it/s]
+Evaluating ...
+nsamples 83
+testenc.numel() 341469
+Perplexity: 7.265431
+layer 24, dataset wikitext2, ppl: 7.2654314041137695, ppl_best: 7.278266429901123
+this layer is good
+disable_tqdm True
+Loading checkpoints:   0%|          | 0/32 [00:00<?, ?it/s]Loading checkpoints:  81%|████████▏ | 26/32 [00:02<00:00,  8.78it/s]Loading checkpoints: 100%|██████████| 32/32 [00:02<00:00, 10.72it/s]
+Evaluating ...
+nsamples 83
+testenc.numel() 341469
+Perplexity: 7.274328
+layer 25, dataset wikitext2, ppl: 7.274328231811523, ppl_best: 7.2654314041137695
+this layer is bad
+disable_tqdm True
+Loading checkpoints:   0%|          | 0/32 [00:00<?, ?it/s]Loading checkpoints:  81%|████████▏ | 26/32 [00:01<00:00, 14.82it/s]Loading checkpoints: 100%|██████████| 32/32 [00:01<00:00, 17.94it/s]
+Evaluating ...
+nsamples 83
+testenc.numel() 341469
+Perplexity: 7.265431
+disable_tqdm True
+Loading checkpoints:   0%|          | 0/32 [00:00<?, ?it/s]Loading checkpoints:  84%|████████▍ | 27/32 [00:02<00:00,  9.02it/s]Loading checkpoints: 100%|██████████| 32/32 [00:03<00:00, 10.59it/s]
+Evaluating ...
+nsamples 83
+testenc.numel() 341469
+Perplexity: 7.270563
+layer 26, dataset wikitext2, ppl: 7.270562648773193, ppl_best: 7.2654314041137695
+this layer is bad
+disable_tqdm True
+Loading checkpoints:   0%|          | 0/32 [00:00<?, ?it/s]Loading checkpoints:  84%|████████▍ | 27/32 [00:01<00:00, 14.98it/s]Loading checkpoints: 100%|██████████| 32/32 [00:01<00:00, 17.47it/s]
+Evaluating ...
+nsamples 83
+testenc.numel() 341469
+Perplexity: 7.265431
+disable_tqdm True
+Loading checkpoints:   0%|          | 0/32 [00:00<?, ?it/s]Loading checkpoints:  88%|████████▊ | 28/32 [00:02<00:00, 10.00it/s]Loading checkpoints: 100%|██████████| 32/32 [00:02<00:00, 11.32it/s]
+Evaluating ...
+nsamples 83
+testenc.numel() 341469
+Perplexity: 7.265090
+layer 27, dataset wikitext2, ppl: 7.265090465545654, ppl_best: 7.2654314041137695
+this layer is good
+disable_tqdm True
+Loading checkpoints:   0%|          | 0/32 [00:00<?, ?it/s]Loading checkpoints:  91%|█████████ | 29/32 [00:02<00:00,  9.83it/s]Loading checkpoints: 100%|██████████| 32/32 [00:02<00:00, 10.75it/s]
+Evaluating ...
+nsamples 83
+testenc.numel() 341469
+Perplexity: 7.252962
+layer 28, dataset wikitext2, ppl: 7.2529616355896, ppl_best: 7.265090465545654
+this layer is good
+disable_tqdm True
+Loading checkpoints:   0%|          | 0/32 [00:00<?, ?it/s]Loading checkpoints:  94%|█████████▍| 30/32 [00:02<00:00, 10.15it/s]Loading checkpoints: 100%|██████████| 32/32 [00:02<00:00, 10.73it/s]
+Evaluating ...
+nsamples 83
+testenc.numel() 341469
+Perplexity: 7.256718
+layer 29, dataset wikitext2, ppl: 7.256717681884766, ppl_best: 7.2529616355896
+this layer is bad
+disable_tqdm True
+Loading checkpoints:   0%|          | 0/32 [00:00<?, ?it/s]Loading checkpoints:  94%|█████████▍| 30/32 [00:01<00:00, 17.62it/s]Loading checkpoints: 100%|██████████| 32/32 [00:01<00:00, 18.48it/s]
+Evaluating ...
+nsamples 83
+testenc.numel() 341469
+Perplexity: 7.252962
+disable_tqdm True
+Loading checkpoints:   0%|          | 0/32 [00:00<?, ?it/s]Loading checkpoints:  97%|█████████▋| 31/32 [00:02<00:00, 10.50it/s]Loading checkpoints: 100%|██████████| 32/32 [00:02<00:00, 10.74it/s]
+Evaluating ...
+nsamples 83
+testenc.numel() 341469
+Perplexity: 7.232255
+layer 30, dataset wikitext2, ppl: 7.232254981994629, ppl_best: 7.2529616355896
+this layer is good
+disable_tqdm True
+Loading checkpoints:   0%|          | 0/32 [00:00<?, ?it/s]Loading checkpoints: 100%|██████████| 32/32 [00:02<00:00, 10.91it/s]Loading checkpoints: 100%|██████████| 32/32 [00:02<00:00, 10.91it/s]
+Evaluating ...
+nsamples 83
+testenc.numel() 341469
+Perplexity: 7.222731
+layer 31, dataset wikitext2, ppl: 7.22273063659668, ppl_best: 7.232254981994629
+this layer is good

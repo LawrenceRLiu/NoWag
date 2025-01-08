@@ -21,7 +21,8 @@ import argparse
 
 parser = argparse.ArgumentParser()
 
-parser.add_argument("--load_path", type=str, default="/data/lliu/huffman/models/meta-llama/Llama-2-7b-hf/hessians_new/pajama/128/layer_0/self_attn.q_proj.pt")
+parser.add_argument("--load_path", type=str, default="/data/lliu/huffman/models/meta-llama/Llama-2-7b-hf/hessians_new/seed_0/pajama/128/layer_0/self_attn.q_proj.pt")
+parser.add_argument("--weights_path", type=str, default="/data/lliu/huffman/models/meta-llama/Llama-2-7b-hf/original_weights/layer_0/self_attn.q_proj.pt")
 parser.add_argument("--save_path", type=str, default="/data/lliu/huffman/test/save_self_attn.q_proj.pt")
 parser.add_argument("--device", type = str, default = "cuda:7",
                     help = "device to use for training")
@@ -60,7 +61,9 @@ torch.manual_seed(seed)
 np.random.seed(seed)
 torch.cuda.manual_seed(seed)
 
+weight = torch.load(args.weights_path)["weight"]
 data = torch.load(args.load_path)
+data["weight"] = weight 
 original_dtype = data["weight"].dtype
 print("original dtype", original_dtype)
 print(data.keys())
@@ -96,20 +99,20 @@ print("n_params", compression_module.get_n_original_parameters())
 print("n_bits", compression_module.get_n_bits())
 print("bpv", compression_module.get_n_bits()/compression_module.get_n_original_parameters())
 
-# compression_module.to(original_dtype)
-os.makedirs(os.path.dirname(args.save_path), exist_ok=True)
-torch.save(compression_module.state_dict(), args.save_path)
-#save the args
+# # compression_module.to(original_dtype)
+# os.makedirs(os.path.dirname(args.save_path), exist_ok=True)
+# torch.save(compression_module.state_dict(), args.save_path)
+# #save the args
 
-current_filetype = args.save_path[args.save_path.rfind("."):]
-args_save_path = args.save_path[:args.save_path.rfind(".")] + "_args.yaml"
-# print("args_save_path", args_save_path)
+# current_filetype = args.save_path[args.save_path.rfind("."):]
+# args_save_path = args.save_path[:args.save_path.rfind(".")] + "_args.yaml"
+# # print("args_save_path", args_save_path)
 
-#save the args as a yaml file
-with open(args_save_path, "w") as f:
-    #add a arg that these are quantized weights
-    kwargs["compression_type"] = "quantized"
-    yaml.dump(kwargs, f)
+# #save the args as a yaml file
+# with open(args_save_path, "w") as f:
+#     #add a arg that these are quantized weights
+#     kwargs["compression_type"] = "quantized"
+#     yaml.dump(kwargs, f)
     
 
 

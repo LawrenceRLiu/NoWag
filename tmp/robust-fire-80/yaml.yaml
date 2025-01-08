@@ -1,0 +1,25 @@
+alignment_kwargs:
+  clip_grad: 0.1
+  discrete_update_every: 10000
+  eps: 0.001
+  low_bound: 1.0e-05
+  lr: 0.001
+  lr_multiplier: 1
+  n_iters: 100
+  patience: 1000
+  patience_scheduler: 1000
+  reinitailize_optimizer: false
+  verbose: 1
+quantizer_kwargs:
+  cluster_ignore_norms: true
+  d: 4
+  initialize_method: kmeans
+  n_bits: 2
+  n_iters: 100
+  norm_order:
+  - 0
+  - 1
+  zero:
+  - false
+  - false
+seed: 0
