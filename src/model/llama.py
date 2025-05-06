@@ -52,6 +52,7 @@ from transformers.utils.deprecation import deprecate_kwarg
 from transformers.models.llama.configuration_llama import LlamaConfig
 from ..quantize_compress import LinearVQ
 from ..sparse_compress import SparseLinear
+from ..permute_compress import PermutedSparseLinear
 
 if is_torch_flex_attn_available():
     from torch.nn.attention.flex_attention import BlockMask
@@ -221,6 +222,14 @@ def CreateCompressedLayerHelper(n_in, n_out, config):
         )
     elif compression_type == "Sparse":
         layer = SparseLinear.blank_init(
+            n_in,
+            n_out,
+            add_bias=compress_config.get("add_bias", False),
+            dtype=config.torch_dtype,
+            **compression_kwargs,
+        )
+    elif compression_type == "Permute":
+        layer = PermutedSparseLinear.blank_init(
             n_in,
             n_out,
             add_bias=compress_config.get("add_bias", False),

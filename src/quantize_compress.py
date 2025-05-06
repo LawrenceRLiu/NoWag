@@ -386,6 +386,7 @@ class LinearVQ(compression_parent.CompressedLinear):
         if denormalize:
             weight = self.normalizer.denormalize(weight)
         return weight
+    
 
     def _no_checkpoint_forward(self, x: torch.FloatTensor):
         if self.forward_method == "otf":

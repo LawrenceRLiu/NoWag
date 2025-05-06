@@ -5,6 +5,9 @@ kwargs:
   - unstructured
   sparse_criterions:
   - wanda
+  pattern:
+  - 2
+  - 4
   normalizer_kwargs:
     norm_order:
     - 0

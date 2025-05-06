@@ -1,7 +1,7 @@
 defaults:
   - _self_
   # compression config
-  - compress: prune
+  - compress: prune_2_4
   - eval: default
 
 base_model: meta-llama/Llama-2-7b-hf

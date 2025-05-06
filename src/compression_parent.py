@@ -217,6 +217,12 @@ class CompressedLinear(nn.Module):
         del self.n_samples
         return [hessian]  # returning a list for consistency with the low rank sparse
 
+    def get_hessian(self) -> torch.FloatTensor:
+        if hasattr(self, "hessian"):
+            return self.hessian
+        else:
+            raise Exception("No hessian found")
+
     def get_hessianDiag(self) -> torch.FloatTensor:
         if hasattr(self, "hessianDiag"):  # new format that saves space
             hessianDiag = self.hessianDiag

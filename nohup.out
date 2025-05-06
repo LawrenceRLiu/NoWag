@@ -1,0 +1,1351 @@
+/data/lliu/NoWAG/src/permute_compress.py:603: UserWarning: 
+The version_base parameter is not specified.
+Please specify a compatability version level, or None.
+Will assume defaults for version 1.1
+  @hydra.main(config_path="../config/compress", config_name="permute")
+pid 3167353
+base_model: meta-llama/Llama-2-7b-hf
+seqlen: -1
+verbose: false
+run_name: test_compress
+weight_path: ./models/${base_model}/original_weights
+hessianDiag_path: ./models/${base_model}/hessianDiags/seed_0/pajama/128
+save_path: ./models/${base_model}/compressed/${run_name}
+temp_path: ./models/${base_model}/temp/${run_name}
+seed: 0
+add_bias: false
+resume: false
+log_wandb: false
+compress:
+  compress_method: Permute
+  compress_kwargs:
+    permutation_config:
+      'N': 2
+      M: 4
+      n_permutations0: 4
+      n_permutations1: 4
+    loss_fn_config:
+      name: l2
+      wrt_to_normalized: true
+      trainable_normalizer: false
+      loss_weighting: hessianDiag
+      hard_frac: 0.75
+    optimizer_config:
+      _target_: torch.optim.Adam
+      lr: 0.1
+    beta_scheduler_config:
+      _target_: src.utils.beta_schedulers.LinearScheduler
+      beta_start: 2.0
+      beta_end: 1.0
+    n_iters: 1000
+    normalizer_kwargs:
+      norm_order:
+      - 0
+      - 1
+      zero:
+      - false
+      - false
+      p: 2
+eval:
+  ppl_dataset:
+  - wikitext2
+  - c4
+  zero_shot_tasks:
+  - winogrande
+  - piqa
+  - rte
+  - arc_easy
+  - arc_challenge
+
+compressing model meta-llama/Llama-2-7b-hf
+Available GPUs: [0, 1, 2, 3, 4, 5, 6, 7]
+n weights found 224
+Starting 8 workers
+Compressing layers:   0%|          | 0/224 [00:00<?, ?it/s]Traceback (most recent call last):
+  File "/data/lliu/NoWAG/NoWag.py", line 85, in compression_worker
+    if cfg.compress.method == "LinearVQ":
+       ^^^^^^^^^^^^^^^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/dictconfig.py", line 359, in __getattr__
+    self._format_and_raise(key=key, value=None, cause=e)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/base.py", line 231, in _format_and_raise
+    format_and_raise(
+    ~~~~~~~~~~~~~~~~^
+        node=self,
+        ^^^^^^^^^^
+    ...<4 lines>...
+        type_override=type_override,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/_utils.py", line 819, in format_and_raise
+    _raise(ex, cause)
+    ~~~~~~^^^^^^^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/_utils.py", line 797, in _raise
+    raise ex.with_traceback(sys.exc_info()[2])  # set env var OC_CAUSE=1 for full trace
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/dictconfig.py", line 351, in __getattr__
+    return self._get_impl(
+           ~~~~~~~~~~~~~~^
+        key=key, default_value=_DEFAULT_MARKER_, validate_key=False
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/dictconfig.py", line 442, in _get_impl
+    node = self._get_child(
+        key=key, throw_on_missing_key=True, validate_key=validate_key
+    )
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/basecontainer.py", line 73, in _get_child
+    child = self._get_node(
+        key=key,
+    ...<3 lines>...
+        throw_on_missing_key=throw_on_missing_key,
+    )
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/dictconfig.py", line 475, in _get_node
+    self._validate_get(key)
+    ~~~~~~~~~~~~~~~~~~^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/dictconfig.py", line 164, in _validate_get
+    self._format_and_raise(
+    ~~~~~~~~~~~~~~~~~~~~~~^
+        key=key, value=value, cause=ConfigAttributeError(msg)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/base.py", line 231, in _format_and_raise
+    format_and_raise(
+    ~~~~~~~~~~~~~~~~^
+        node=self,
+        ^^^^^^^^^^
+    ...<4 lines>...
+        type_override=type_override,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/_utils.py", line 899, in format_and_raise
+    _raise(ex, cause)
+    ~~~~~~^^^^^^^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/_utils.py", line 797, in _raise
+    raise ex.with_traceback(sys.exc_info()[2])  # set env var OC_CAUSE=1 for full trace
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+omegaconf.errors.ConfigAttributeError: Key 'method' is not in struct
+    full_key: compress.method
+    object_type=dict
+Process Process-1:
+Traceback (most recent call last):
+  File "/data/lliu/NoWAG/NoWag.py", line 152, in compression_worker
+    raise e
+  File "/data/lliu/NoWAG/NoWag.py", line 85, in compression_worker
+    if cfg.compress.method == "LinearVQ":
+       ^^^^^^^^^^^^^^^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/dictconfig.py", line 359, in __getattr__
+    self._format_and_raise(key=key, value=None, cause=e)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/base.py", line 231, in _format_and_raise
+    format_and_raise(
+    ~~~~~~~~~~~~~~~~^
+        node=self,
+        ^^^^^^^^^^
+    ...<4 lines>...
+        type_override=type_override,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/_utils.py", line 819, in format_and_raise
+    _raise(ex, cause)
+    ~~~~~~^^^^^^^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/_utils.py", line 797, in _raise
+    raise ex.with_traceback(sys.exc_info()[2])  # set env var OC_CAUSE=1 for full trace
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/dictconfig.py", line 351, in __getattr__
+    return self._get_impl(
+           ~~~~~~~~~~~~~~^
+        key=key, default_value=_DEFAULT_MARKER_, validate_key=False
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/dictconfig.py", line 442, in _get_impl
+    node = self._get_child(
+        key=key, throw_on_missing_key=True, validate_key=validate_key
+    )
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/basecontainer.py", line 73, in _get_child
+    child = self._get_node(
+        key=key,
+    ...<3 lines>...
+        throw_on_missing_key=throw_on_missing_key,
+    )
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/dictconfig.py", line 475, in _get_node
+    self._validate_get(key)
+    ~~~~~~~~~~~~~~~~~~^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/dictconfig.py", line 164, in _validate_get
+    self._format_and_raise(
+    ~~~~~~~~~~~~~~~~~~~~~~^
+        key=key, value=value, cause=ConfigAttributeError(msg)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/base.py", line 231, in _format_and_raise
+    format_and_raise(
+    ~~~~~~~~~~~~~~~~^
+        node=self,
+        ^^^^^^^^^^
+    ...<4 lines>...
+        type_override=type_override,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/_utils.py", line 899, in format_and_raise
+    _raise(ex, cause)
+    ~~~~~~^^^^^^^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/_utils.py", line 797, in _raise
+    raise ex.with_traceback(sys.exc_info()[2])  # set env var OC_CAUSE=1 for full trace
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+omegaconf.errors.ConfigAttributeError: Key 'method' is not in struct
+    full_key: compress.method
+    object_type=dict
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/multiprocessing/process.py", line 313, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/lliu/NoWAG/NoWag.py", line 163, in compression_worker
+    compression_measure,
+    ^^^^^^^^^^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'compression_measure' where it is not associated with a value
+========================= Error in quantization of layer_3/mlp.gate_proj =========================
+Key 'method' is not in struct
+    full_key: compress.method
+    object_type=dict
+Traceback (most recent call last):
+  File "/data/lliu/NoWAG/NoWag.py", line 85, in compression_worker
+    if cfg.compress.method == "LinearVQ":
+       ^^^^^^^^^^^^^^^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/dictconfig.py", line 359, in __getattr__
+    self._format_and_raise(key=key, value=None, cause=e)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/base.py", line 231, in _format_and_raise
+    format_and_raise(
+    ~~~~~~~~~~~~~~~~^
+        node=self,
+        ^^^^^^^^^^
+    ...<4 lines>...
+        type_override=type_override,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/_utils.py", line 819, in format_and_raise
+    _raise(ex, cause)
+    ~~~~~~^^^^^^^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/_utils.py", line 797, in _raise
+    raise ex.with_traceback(sys.exc_info()[2])  # set env var OC_CAUSE=1 for full trace
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/dictconfig.py", line 351, in __getattr__
+    return self._get_impl(
+           ~~~~~~~~~~~~~~^
+        key=key, default_value=_DEFAULT_MARKER_, validate_key=False
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/dictconfig.py", line 442, in _get_impl
+    node = self._get_child(
+        key=key, throw_on_missing_key=True, validate_key=validate_key
+    )
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/basecontainer.py", line 73, in _get_child
+    child = self._get_node(
+        key=key,
+    ...<3 lines>...
+        throw_on_missing_key=throw_on_missing_key,
+    )
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/dictconfig.py", line 475, in _get_node
+    self._validate_get(key)
+    ~~~~~~~~~~~~~~~~~~^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/dictconfig.py", line 164, in _validate_get
+    self._format_and_raise(
+    ~~~~~~~~~~~~~~~~~~~~~~^
+        key=key, value=value, cause=ConfigAttributeError(msg)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/base.py", line 231, in _format_and_raise
+    format_and_raise(
+    ~~~~~~~~~~~~~~~~^
+        node=self,
+        ^^^^^^^^^^
+    ...<4 lines>...
+        type_override=type_override,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/_utils.py", line 899, in format_and_raise
+    _raise(ex, cause)
+    ~~~~~~^^^^^^^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/_utils.py", line 797, in _raise
+    raise ex.with_traceback(sys.exc_info()[2])  # set env var OC_CAUSE=1 for full trace
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+omegaconf.errors.ConfigAttributeError: Key 'method' is not in struct
+    full_key: compress.method
+    object_type=dict
+Process Process-2:
+Traceback (most recent call last):
+  File "/data/lliu/NoWAG/NoWag.py", line 152, in compression_worker
+    raise e
+  File "/data/lliu/NoWAG/NoWag.py", line 85, in compression_worker
+    if cfg.compress.method == "LinearVQ":
+       ^^^^^^^^^^^^^^^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/dictconfig.py", line 359, in __getattr__
+    self._format_and_raise(key=key, value=None, cause=e)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/base.py", line 231, in _format_and_raise
+    format_and_raise(
+    ~~~~~~~~~~~~~~~~^
+        node=self,
+        ^^^^^^^^^^
+    ...<4 lines>...
+        type_override=type_override,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/_utils.py", line 819, in format_and_raise
+    _raise(ex, cause)
+    ~~~~~~^^^^^^^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/_utils.py", line 797, in _raise
+    raise ex.with_traceback(sys.exc_info()[2])  # set env var OC_CAUSE=1 for full trace
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/dictconfig.py", line 351, in __getattr__
+    return self._get_impl(
+           ~~~~~~~~~~~~~~^
+        key=key, default_value=_DEFAULT_MARKER_, validate_key=False
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/dictconfig.py", line 442, in _get_impl
+    node = self._get_child(
+        key=key, throw_on_missing_key=True, validate_key=validate_key
+    )
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/basecontainer.py", line 73, in _get_child
+    child = self._get_node(
+        key=key,
+    ...<3 lines>...
+        throw_on_missing_key=throw_on_missing_key,
+    )
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/dictconfig.py", line 475, in _get_node
+    self._validate_get(key)
+    ~~~~~~~~~~~~~~~~~~^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/dictconfig.py", line 164, in _validate_get
+    self._format_and_raise(
+    ~~~~~~~~~~~~~~~~~~~~~~^
+        key=key, value=value, cause=ConfigAttributeError(msg)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/base.py", line 231, in _format_and_raise
+    format_and_raise(
+    ~~~~~~~~~~~~~~~~^
+        node=self,
+        ^^^^^^^^^^
+    ...<4 lines>...
+        type_override=type_override,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/_utils.py", line 899, in format_and_raise
+    _raise(ex, cause)
+    ~~~~~~^^^^^^^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/_utils.py", line 797, in _raise
+    raise ex.with_traceback(sys.exc_info()[2])  # set env var OC_CAUSE=1 for full trace
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+omegaconf.errors.ConfigAttributeError: Key 'method' is not in struct
+    full_key: compress.method
+    object_type=dict
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/multiprocessing/process.py", line 313, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/lliu/NoWAG/NoWag.py", line 163, in compression_worker
+    compression_measure,
+    ^^^^^^^^^^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'compression_measure' where it is not associated with a value
+========================= Error in quantization of layer_3/mlp.up_proj =========================
+Key 'method' is not in struct
+    full_key: compress.method
+    object_type=dict
+Compressing layers:   0%|          | 0/224 [00:01<?, ?it/s]
+Traceback (most recent call last):
+  File "/data/lliu/NoWAG/NoWag.py", line 85, in compression_worker
+    if cfg.compress.method == "LinearVQ":
+       ^^^^^^^^^^^^^^^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/dictconfig.py", line 359, in __getattr__
+    self._format_and_raise(key=key, value=None, cause=e)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/base.py", line 231, in _format_and_raise
+    format_and_raise(
+    ~~~~~~~~~~~~~~~~^
+        node=self,
+        ^^^^^^^^^^
+    ...<4 lines>...
+        type_override=type_override,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/_utils.py", line 819, in format_and_raise
+    _raise(ex, cause)
+    ~~~~~~^^^^^^^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/_utils.py", line 797, in _raise
+    raise ex.with_traceback(sys.exc_info()[2])  # set env var OC_CAUSE=1 for full trace
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/dictconfig.py", line 351, in __getattr__
+    return self._get_impl(
+           ~~~~~~~~~~~~~~^
+        key=key, default_value=_DEFAULT_MARKER_, validate_key=False
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/dictconfig.py", line 442, in _get_impl
+    node = self._get_child(
+        key=key, throw_on_missing_key=True, validate_key=validate_key
+    )
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/basecontainer.py", line 73, in _get_child
+    child = self._get_node(
+        key=key,
+    ...<3 lines>...
+        throw_on_missing_key=throw_on_missing_key,
+    )
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/dictconfig.py", line 475, in _get_node
+    self._validate_get(key)
+    ~~~~~~~~~~~~~~~~~~^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/dictconfig.py", line 164, in _validate_get
+    self._format_and_raise(
+    ~~~~~~~~~~~~~~~~~~~~~~^
+        key=key, value=value, cause=ConfigAttributeError(msg)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/base.py", line 231, in _format_and_raise
+    format_and_raise(
+    ~~~~~~~~~~~~~~~~^
+        node=self,
+        ^^^^^^^^^^
+    ...<4 lines>...
+        type_override=type_override,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/_utils.py", line 899, in format_and_raise
+    _raise(ex, cause)
+    ~~~~~~^^^^^^^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/_utils.py", line 797, in _raise
+    raise ex.with_traceback(sys.exc_info()[2])  # set env var OC_CAUSE=1 for full trace
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+omegaconf.errors.ConfigAttributeError: Key 'method' is not in struct
+    full_key: compress.method
+    object_type=dict
+Process Process-3:
+Traceback (most recent call last):
+  File "/data/lliu/NoWAG/NoWag.py", line 152, in compression_worker
+    raise e
+  File "/data/lliu/NoWAG/NoWag.py", line 85, in compression_worker
+    if cfg.compress.method == "LinearVQ":
+       ^^^^^^^^^^^^^^^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/dictconfig.py", line 359, in __getattr__
+    self._format_and_raise(key=key, value=None, cause=e)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/base.py", line 231, in _format_and_raise
+    format_and_raise(
+    ~~~~~~~~~~~~~~~~^
+        node=self,
+        ^^^^^^^^^^
+    ...<4 lines>...
+        type_override=type_override,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/_utils.py", line 819, in format_and_raise
+    _raise(ex, cause)
+    ~~~~~~^^^^^^^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/_utils.py", line 797, in _raise
+    raise ex.with_traceback(sys.exc_info()[2])  # set env var OC_CAUSE=1 for full trace
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/dictconfig.py", line 351, in __getattr__
+    return self._get_impl(
+           ~~~~~~~~~~~~~~^
+        key=key, default_value=_DEFAULT_MARKER_, validate_key=False
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/dictconfig.py", line 442, in _get_impl
+    node = self._get_child(
+        key=key, throw_on_missing_key=True, validate_key=validate_key
+    )
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/basecontainer.py", line 73, in _get_child
+    child = self._get_node(
+        key=key,
+    ...<3 lines>...
+        throw_on_missing_key=throw_on_missing_key,
+    )
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/dictconfig.py", line 475, in _get_node
+    self._validate_get(key)
+    ~~~~~~~~~~~~~~~~~~^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/dictconfig.py", line 164, in _validate_get
+    self._format_and_raise(
+    ~~~~~~~~~~~~~~~~~~~~~~^
+        key=key, value=value, cause=ConfigAttributeError(msg)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/base.py", line 231, in _format_and_raise
+    format_and_raise(
+    ~~~~~~~~~~~~~~~~^
+        node=self,
+        ^^^^^^^^^^
+    ...<4 lines>...
+        type_override=type_override,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/_utils.py", line 899, in format_and_raise
+    _raise(ex, cause)
+    ~~~~~~^^^^^^^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/_utils.py", line 797, in _raise
+    raise ex.with_traceback(sys.exc_info()[2])  # set env var OC_CAUSE=1 for full trace
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+omegaconf.errors.ConfigAttributeError: Key 'method' is not in struct
+    full_key: compress.method
+    object_type=dict
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/multiprocessing/process.py", line 313, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/lliu/NoWAG/NoWag.py", line 163, in compression_worker
+    compression_measure,
+    ^^^^^^^^^^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'compression_measure' where it is not associated with a value
+========================= Error in quantization of layer_3/self_attn.q_proj =========================
+Key 'method' is not in struct
+    full_key: compress.method
+    object_type=dict
+Traceback (most recent call last):
+  File "/data/lliu/NoWAG/NoWag.py", line 85, in compression_worker
+    if cfg.compress.method == "LinearVQ":
+       ^^^^^^^^^^^^^^^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/dictconfig.py", line 359, in __getattr__
+    self._format_and_raise(key=key, value=None, cause=e)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/base.py", line 231, in _format_and_raise
+    format_and_raise(
+    ~~~~~~~~~~~~~~~~^
+        node=self,
+        ^^^^^^^^^^
+    ...<4 lines>...
+        type_override=type_override,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/_utils.py", line 819, in format_and_raise
+    _raise(ex, cause)
+    ~~~~~~^^^^^^^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/_utils.py", line 797, in _raise
+    raise ex.with_traceback(sys.exc_info()[2])  # set env var OC_CAUSE=1 for full trace
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/dictconfig.py", line 351, in __getattr__
+    return self._get_impl(
+           ~~~~~~~~~~~~~~^
+        key=key, default_value=_DEFAULT_MARKER_, validate_key=False
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/dictconfig.py", line 442, in _get_impl
+    node = self._get_child(
+        key=key, throw_on_missing_key=True, validate_key=validate_key
+    )
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/basecontainer.py", line 73, in _get_child
+    child = self._get_node(
+        key=key,
+    ...<3 lines>...
+        throw_on_missing_key=throw_on_missing_key,
+    )
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/dictconfig.py", line 475, in _get_node
+    self._validate_get(key)
+    ~~~~~~~~~~~~~~~~~~^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/dictconfig.py", line 164, in _validate_get
+    self._format_and_raise(
+    ~~~~~~~~~~~~~~~~~~~~~~^
+        key=key, value=value, cause=ConfigAttributeError(msg)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/base.py", line 231, in _format_and_raise
+    format_and_raise(
+    ~~~~~~~~~~~~~~~~^
+        node=self,
+        ^^^^^^^^^^
+    ...<4 lines>...
+        type_override=type_override,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/_utils.py", line 899, in format_and_raise
+    _raise(ex, cause)
+    ~~~~~~^^^^^^^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/_utils.py", line 797, in _raise
+    raise ex.with_traceback(sys.exc_info()[2])  # set env var OC_CAUSE=1 for full trace
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+omegaconf.errors.ConfigAttributeError: Key 'method' is not in struct
+    full_key: compress.method
+    object_type=dict
+Process Process-4:
+Traceback (most recent call last):
+  File "/data/lliu/NoWAG/NoWag.py", line 152, in compression_worker
+    raise e
+  File "/data/lliu/NoWAG/NoWag.py", line 85, in compression_worker
+    if cfg.compress.method == "LinearVQ":
+       ^^^^^^^^^^^^^^^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/dictconfig.py", line 359, in __getattr__
+    self._format_and_raise(key=key, value=None, cause=e)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/base.py", line 231, in _format_and_raise
+    format_and_raise(
+    ~~~~~~~~~~~~~~~~^
+        node=self,
+        ^^^^^^^^^^
+    ...<4 lines>...
+        type_override=type_override,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/_utils.py", line 819, in format_and_raise
+    _raise(ex, cause)
+    ~~~~~~^^^^^^^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/_utils.py", line 797, in _raise
+    raise ex.with_traceback(sys.exc_info()[2])  # set env var OC_CAUSE=1 for full trace
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/dictconfig.py", line 351, in __getattr__
+    return self._get_impl(
+           ~~~~~~~~~~~~~~^
+        key=key, default_value=_DEFAULT_MARKER_, validate_key=False
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/dictconfig.py", line 442, in _get_impl
+    node = self._get_child(
+        key=key, throw_on_missing_key=True, validate_key=validate_key
+    )
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/basecontainer.py", line 73, in _get_child
+    child = self._get_node(
+        key=key,
+    ...<3 lines>...
+        throw_on_missing_key=throw_on_missing_key,
+    )
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/dictconfig.py", line 475, in _get_node
+    self._validate_get(key)
+    ~~~~~~~~~~~~~~~~~~^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/dictconfig.py", line 164, in _validate_get
+    self._format_and_raise(
+    ~~~~~~~~~~~~~~~~~~~~~~^
+        key=key, value=value, cause=ConfigAttributeError(msg)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/base.py", line 231, in _format_and_raise
+    format_and_raise(
+    ~~~~~~~~~~~~~~~~^
+        node=self,
+        ^^^^^^^^^^
+    ...<4 lines>...
+        type_override=type_override,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/_utils.py", line 899, in format_and_raise
+    _raise(ex, cause)
+    ~~~~~~^^^^^^^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/_utils.py", line 797, in _raise
+    raise ex.with_traceback(sys.exc_info()[2])  # set env var OC_CAUSE=1 for full trace
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+omegaconf.errors.ConfigAttributeError: Key 'method' is not in struct
+    full_key: compress.method
+    object_type=dict
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/multiprocessing/process.py", line 313, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/lliu/NoWAG/NoWag.py", line 163, in compression_worker
+    compression_measure,
+    ^^^^^^^^^^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'compression_measure' where it is not associated with a value
+========================= Error in quantization of layer_3/self_attn.k_proj =========================
+Key 'method' is not in struct
+    full_key: compress.method
+    object_type=dict
+Traceback (most recent call last):
+  File "/data/lliu/NoWAG/NoWag.py", line 85, in compression_worker
+    if cfg.compress.method == "LinearVQ":
+       ^^^^^^^^^^^^^^^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/dictconfig.py", line 359, in __getattr__
+    self._format_and_raise(key=key, value=None, cause=e)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/base.py", line 231, in _format_and_raise
+    format_and_raise(
+    ~~~~~~~~~~~~~~~~^
+        node=self,
+        ^^^^^^^^^^
+    ...<4 lines>...
+        type_override=type_override,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/_utils.py", line 819, in format_and_raise
+    _raise(ex, cause)
+    ~~~~~~^^^^^^^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/_utils.py", line 797, in _raise
+    raise ex.with_traceback(sys.exc_info()[2])  # set env var OC_CAUSE=1 for full trace
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/dictconfig.py", line 351, in __getattr__
+    return self._get_impl(
+           ~~~~~~~~~~~~~~^
+        key=key, default_value=_DEFAULT_MARKER_, validate_key=False
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/dictconfig.py", line 442, in _get_impl
+    node = self._get_child(
+        key=key, throw_on_missing_key=True, validate_key=validate_key
+    )
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/basecontainer.py", line 73, in _get_child
+    child = self._get_node(
+        key=key,
+    ...<3 lines>...
+        throw_on_missing_key=throw_on_missing_key,
+    )
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/dictconfig.py", line 475, in _get_node
+    self._validate_get(key)
+    ~~~~~~~~~~~~~~~~~~^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/dictconfig.py", line 164, in _validate_get
+    self._format_and_raise(
+    ~~~~~~~~~~~~~~~~~~~~~~^
+        key=key, value=value, cause=ConfigAttributeError(msg)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/base.py", line 231, in _format_and_raise
+    format_and_raise(
+    ~~~~~~~~~~~~~~~~^
+        node=self,
+        ^^^^^^^^^^
+    ...<4 lines>...
+        type_override=type_override,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/_utils.py", line 899, in format_and_raise
+    _raise(ex, cause)
+    ~~~~~~^^^^^^^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/_utils.py", line 797, in _raise
+    raise ex.with_traceback(sys.exc_info()[2])  # set env var OC_CAUSE=1 for full trace
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+omegaconf.errors.ConfigAttributeError: Key 'method' is not in struct
+    full_key: compress.method
+    object_type=dict
+Process Process-5:
+Traceback (most recent call last):
+  File "/data/lliu/NoWAG/NoWag.py", line 152, in compression_worker
+    raise e
+  File "/data/lliu/NoWAG/NoWag.py", line 85, in compression_worker
+    if cfg.compress.method == "LinearVQ":
+       ^^^^^^^^^^^^^^^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/dictconfig.py", line 359, in __getattr__
+    self._format_and_raise(key=key, value=None, cause=e)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/base.py", line 231, in _format_and_raise
+    format_and_raise(
+    ~~~~~~~~~~~~~~~~^
+        node=self,
+        ^^^^^^^^^^
+    ...<4 lines>...
+        type_override=type_override,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/_utils.py", line 819, in format_and_raise
+    _raise(ex, cause)
+    ~~~~~~^^^^^^^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/_utils.py", line 797, in _raise
+    raise ex.with_traceback(sys.exc_info()[2])  # set env var OC_CAUSE=1 for full trace
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/dictconfig.py", line 351, in __getattr__
+    return self._get_impl(
+           ~~~~~~~~~~~~~~^
+        key=key, default_value=_DEFAULT_MARKER_, validate_key=False
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/dictconfig.py", line 442, in _get_impl
+    node = self._get_child(
+        key=key, throw_on_missing_key=True, validate_key=validate_key
+    )
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/basecontainer.py", line 73, in _get_child
+    child = self._get_node(
+        key=key,
+    ...<3 lines>...
+        throw_on_missing_key=throw_on_missing_key,
+    )
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/dictconfig.py", line 475, in _get_node
+    self._validate_get(key)
+    ~~~~~~~~~~~~~~~~~~^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/dictconfig.py", line 164, in _validate_get
+    self._format_and_raise(
+    ~~~~~~~~~~~~~~~~~~~~~~^
+        key=key, value=value, cause=ConfigAttributeError(msg)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/base.py", line 231, in _format_and_raise
+    format_and_raise(
+    ~~~~~~~~~~~~~~~~^
+        node=self,
+        ^^^^^^^^^^
+    ...<4 lines>...
+        type_override=type_override,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/_utils.py", line 899, in format_and_raise
+    _raise(ex, cause)
+    ~~~~~~^^^^^^^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/_utils.py", line 797, in _raise
+    raise ex.with_traceback(sys.exc_info()[2])  # set env var OC_CAUSE=1 for full trace
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+omegaconf.errors.ConfigAttributeError: Key 'method' is not in struct
+    full_key: compress.method
+    object_type=dict
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/multiprocessing/process.py", line 313, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/lliu/NoWAG/NoWag.py", line 163, in compression_worker
+    compression_measure,
+    ^^^^^^^^^^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'compression_measure' where it is not associated with a value
+========================= Error in quantization of layer_3/self_attn.o_proj =========================
+Key 'method' is not in struct
+    full_key: compress.method
+    object_type=dict
+Traceback (most recent call last):
+  File "/data/lliu/NoWAG/NoWag.py", line 85, in compression_worker
+    if cfg.compress.method == "LinearVQ":
+       ^^^^^^^^^^^^^^^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/dictconfig.py", line 359, in __getattr__
+    self._format_and_raise(key=key, value=None, cause=e)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/base.py", line 231, in _format_and_raise
+    format_and_raise(
+    ~~~~~~~~~~~~~~~~^
+        node=self,
+        ^^^^^^^^^^
+    ...<4 lines>...
+        type_override=type_override,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/_utils.py", line 819, in format_and_raise
+    _raise(ex, cause)
+    ~~~~~~^^^^^^^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/_utils.py", line 797, in _raise
+    raise ex.with_traceback(sys.exc_info()[2])  # set env var OC_CAUSE=1 for full trace
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/dictconfig.py", line 351, in __getattr__
+    return self._get_impl(
+           ~~~~~~~~~~~~~~^
+        key=key, default_value=_DEFAULT_MARKER_, validate_key=False
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/dictconfig.py", line 442, in _get_impl
+    node = self._get_child(
+        key=key, throw_on_missing_key=True, validate_key=validate_key
+    )
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/basecontainer.py", line 73, in _get_child
+    child = self._get_node(
+        key=key,
+    ...<3 lines>...
+        throw_on_missing_key=throw_on_missing_key,
+    )
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/dictconfig.py", line 475, in _get_node
+    self._validate_get(key)
+    ~~~~~~~~~~~~~~~~~~^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/dictconfig.py", line 164, in _validate_get
+    self._format_and_raise(
+    ~~~~~~~~~~~~~~~~~~~~~~^
+        key=key, value=value, cause=ConfigAttributeError(msg)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/base.py", line 231, in _format_and_raise
+    format_and_raise(
+    ~~~~~~~~~~~~~~~~^
+        node=self,
+        ^^^^^^^^^^
+    ...<4 lines>...
+        type_override=type_override,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/_utils.py", line 899, in format_and_raise
+    _raise(ex, cause)
+    ~~~~~~^^^^^^^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/_utils.py", line 797, in _raise
+    raise ex.with_traceback(sys.exc_info()[2])  # set env var OC_CAUSE=1 for full trace
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+omegaconf.errors.ConfigAttributeError: Key 'method' is not in struct
+    full_key: compress.method
+    object_type=dict
+Process Process-6:
+Traceback (most recent call last):
+Traceback (most recent call last):
+  File "/data/lliu/NoWAG/NoWag.py", line 85, in compression_worker
+    if cfg.compress.method == "LinearVQ":
+       ^^^^^^^^^^^^^^^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/dictconfig.py", line 359, in __getattr__
+    self._format_and_raise(key=key, value=None, cause=e)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/base.py", line 231, in _format_and_raise
+    format_and_raise(
+    ~~~~~~~~~~~~~~~~^
+        node=self,
+        ^^^^^^^^^^
+    ...<4 lines>...
+        type_override=type_override,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/_utils.py", line 819, in format_and_raise
+    _raise(ex, cause)
+    ~~~~~~^^^^^^^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/_utils.py", line 797, in _raise
+    raise ex.with_traceback(sys.exc_info()[2])  # set env var OC_CAUSE=1 for full trace
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/dictconfig.py", line 351, in __getattr__
+    return self._get_impl(
+           ~~~~~~~~~~~~~~^
+        key=key, default_value=_DEFAULT_MARKER_, validate_key=False
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/dictconfig.py", line 442, in _get_impl
+    node = self._get_child(
+        key=key, throw_on_missing_key=True, validate_key=validate_key
+    )
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/basecontainer.py", line 73, in _get_child
+    child = self._get_node(
+        key=key,
+    ...<3 lines>...
+        throw_on_missing_key=throw_on_missing_key,
+    )
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/dictconfig.py", line 475, in _get_node
+    self._validate_get(key)
+    ~~~~~~~~~~~~~~~~~~^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/dictconfig.py", line 164, in _validate_get
+    self._format_and_raise(
+    ~~~~~~~~~~~~~~~~~~~~~~^
+        key=key, value=value, cause=ConfigAttributeError(msg)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/base.py", line 231, in _format_and_raise
+    format_and_raise(
+    ~~~~~~~~~~~~~~~~^
+        node=self,
+        ^^^^^^^^^^
+    ...<4 lines>...
+        type_override=type_override,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/_utils.py", line 899, in format_and_raise
+    _raise(ex, cause)
+    ~~~~~~^^^^^^^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/_utils.py", line 797, in _raise
+    raise ex.with_traceback(sys.exc_info()[2])  # set env var OC_CAUSE=1 for full trace
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+omegaconf.errors.ConfigAttributeError: Key 'method' is not in struct
+    full_key: compress.method
+    object_type=dict
+  File "/data/lliu/NoWAG/NoWag.py", line 152, in compression_worker
+    raise e
+  File "/data/lliu/NoWAG/NoWag.py", line 85, in compression_worker
+    if cfg.compress.method == "LinearVQ":
+       ^^^^^^^^^^^^^^^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/dictconfig.py", line 359, in __getattr__
+    self._format_and_raise(key=key, value=None, cause=e)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/base.py", line 231, in _format_and_raise
+    format_and_raise(
+    ~~~~~~~~~~~~~~~~^
+        node=self,
+        ^^^^^^^^^^
+    ...<4 lines>...
+        type_override=type_override,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/_utils.py", line 819, in format_and_raise
+    _raise(ex, cause)
+    ~~~~~~^^^^^^^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/_utils.py", line 797, in _raise
+    raise ex.with_traceback(sys.exc_info()[2])  # set env var OC_CAUSE=1 for full trace
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/dictconfig.py", line 351, in __getattr__
+    return self._get_impl(
+           ~~~~~~~~~~~~~~^
+        key=key, default_value=_DEFAULT_MARKER_, validate_key=False
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/dictconfig.py", line 442, in _get_impl
+    node = self._get_child(
+        key=key, throw_on_missing_key=True, validate_key=validate_key
+    )
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/basecontainer.py", line 73, in _get_child
+    child = self._get_node(
+        key=key,
+    ...<3 lines>...
+        throw_on_missing_key=throw_on_missing_key,
+    )
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/dictconfig.py", line 475, in _get_node
+    self._validate_get(key)
+    ~~~~~~~~~~~~~~~~~~^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/dictconfig.py", line 164, in _validate_get
+    self._format_and_raise(
+    ~~~~~~~~~~~~~~~~~~~~~~^
+        key=key, value=value, cause=ConfigAttributeError(msg)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/base.py", line 231, in _format_and_raise
+    format_and_raise(
+    ~~~~~~~~~~~~~~~~^
+        node=self,
+        ^^^^^^^^^^
+    ...<4 lines>...
+        type_override=type_override,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/_utils.py", line 899, in format_and_raise
+    _raise(ex, cause)
+    ~~~~~~^^^^^^^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/_utils.py", line 797, in _raise
+    raise ex.with_traceback(sys.exc_info()[2])  # set env var OC_CAUSE=1 for full trace
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+omegaconf.errors.ConfigAttributeError: Key 'method' is not in struct
+    full_key: compress.method
+    object_type=dict
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/multiprocessing/process.py", line 313, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/lliu/NoWAG/NoWag.py", line 163, in compression_worker
+    compression_measure,
+    ^^^^^^^^^^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'compression_measure' where it is not associated with a value
+========================= Error in quantization of layer_3/mlp.down_proj =========================
+Key 'method' is not in struct
+    full_key: compress.method
+    object_type=dict
+Process Process-7:
+Traceback (most recent call last):
+  File "/data/lliu/NoWAG/NoWag.py", line 152, in compression_worker
+    raise e
+  File "/data/lliu/NoWAG/NoWag.py", line 85, in compression_worker
+    if cfg.compress.method == "LinearVQ":
+       ^^^^^^^^^^^^^^^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/dictconfig.py", line 359, in __getattr__
+    self._format_and_raise(key=key, value=None, cause=e)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/base.py", line 231, in _format_and_raise
+    format_and_raise(
+    ~~~~~~~~~~~~~~~~^
+        node=self,
+        ^^^^^^^^^^
+    ...<4 lines>...
+        type_override=type_override,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/_utils.py", line 819, in format_and_raise
+    _raise(ex, cause)
+    ~~~~~~^^^^^^^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/_utils.py", line 797, in _raise
+    raise ex.with_traceback(sys.exc_info()[2])  # set env var OC_CAUSE=1 for full trace
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/dictconfig.py", line 351, in __getattr__
+    return self._get_impl(
+           ~~~~~~~~~~~~~~^
+        key=key, default_value=_DEFAULT_MARKER_, validate_key=False
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/dictconfig.py", line 442, in _get_impl
+    node = self._get_child(
+        key=key, throw_on_missing_key=True, validate_key=validate_key
+    )
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/basecontainer.py", line 73, in _get_child
+    child = self._get_node(
+        key=key,
+    ...<3 lines>...
+        throw_on_missing_key=throw_on_missing_key,
+    )
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/dictconfig.py", line 475, in _get_node
+    self._validate_get(key)
+    ~~~~~~~~~~~~~~~~~~^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/dictconfig.py", line 164, in _validate_get
+    self._format_and_raise(
+    ~~~~~~~~~~~~~~~~~~~~~~^
+        key=key, value=value, cause=ConfigAttributeError(msg)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/base.py", line 231, in _format_and_raise
+    format_and_raise(
+    ~~~~~~~~~~~~~~~~^
+        node=self,
+        ^^^^^^^^^^
+    ...<4 lines>...
+        type_override=type_override,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/_utils.py", line 899, in format_and_raise
+    _raise(ex, cause)
+    ~~~~~~^^^^^^^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/_utils.py", line 797, in _raise
+    raise ex.with_traceback(sys.exc_info()[2])  # set env var OC_CAUSE=1 for full trace
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+omegaconf.errors.ConfigAttributeError: Key 'method' is not in struct
+    full_key: compress.method
+    object_type=dict
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/multiprocessing/process.py", line 313, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/lliu/NoWAG/NoWag.py", line 163, in compression_worker
+    compression_measure,
+    ^^^^^^^^^^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'compression_measure' where it is not associated with a value
+========================= Error in quantization of layer_3/self_attn.v_proj =========================
+Key 'method' is not in struct
+    full_key: compress.method
+    object_type=dict
+Traceback (most recent call last):
+  File "/data/lliu/NoWAG/NoWag.py", line 85, in compression_worker
+    if cfg.compress.method == "LinearVQ":
+       ^^^^^^^^^^^^^^^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/dictconfig.py", line 359, in __getattr__
+    self._format_and_raise(key=key, value=None, cause=e)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/base.py", line 231, in _format_and_raise
+    format_and_raise(
+    ~~~~~~~~~~~~~~~~^
+        node=self,
+        ^^^^^^^^^^
+    ...<4 lines>...
+        type_override=type_override,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/_utils.py", line 819, in format_and_raise
+    _raise(ex, cause)
+    ~~~~~~^^^^^^^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/_utils.py", line 797, in _raise
+    raise ex.with_traceback(sys.exc_info()[2])  # set env var OC_CAUSE=1 for full trace
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/dictconfig.py", line 351, in __getattr__
+    return self._get_impl(
+           ~~~~~~~~~~~~~~^
+        key=key, default_value=_DEFAULT_MARKER_, validate_key=False
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/dictconfig.py", line 442, in _get_impl
+    node = self._get_child(
+        key=key, throw_on_missing_key=True, validate_key=validate_key
+    )
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/basecontainer.py", line 73, in _get_child
+    child = self._get_node(
+        key=key,
+    ...<3 lines>...
+        throw_on_missing_key=throw_on_missing_key,
+    )
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/dictconfig.py", line 475, in _get_node
+    self._validate_get(key)
+    ~~~~~~~~~~~~~~~~~~^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/dictconfig.py", line 164, in _validate_get
+    self._format_and_raise(
+    ~~~~~~~~~~~~~~~~~~~~~~^
+        key=key, value=value, cause=ConfigAttributeError(msg)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/base.py", line 231, in _format_and_raise
+    format_and_raise(
+    ~~~~~~~~~~~~~~~~^
+        node=self,
+        ^^^^^^^^^^
+    ...<4 lines>...
+        type_override=type_override,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/_utils.py", line 899, in format_and_raise
+    _raise(ex, cause)
+    ~~~~~~^^^^^^^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/_utils.py", line 797, in _raise
+    raise ex.with_traceback(sys.exc_info()[2])  # set env var OC_CAUSE=1 for full trace
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+omegaconf.errors.ConfigAttributeError: Key 'method' is not in struct
+    full_key: compress.method
+    object_type=dict
+Process Process-8:
+Traceback (most recent call last):
+  File "/data/lliu/NoWAG/NoWag.py", line 152, in compression_worker
+    raise e
+  File "/data/lliu/NoWAG/NoWag.py", line 85, in compression_worker
+    if cfg.compress.method == "LinearVQ":
+       ^^^^^^^^^^^^^^^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/dictconfig.py", line 359, in __getattr__
+    self._format_and_raise(key=key, value=None, cause=e)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/base.py", line 231, in _format_and_raise
+    format_and_raise(
+    ~~~~~~~~~~~~~~~~^
+        node=self,
+        ^^^^^^^^^^
+    ...<4 lines>...
+        type_override=type_override,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/_utils.py", line 819, in format_and_raise
+    _raise(ex, cause)
+    ~~~~~~^^^^^^^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/_utils.py", line 797, in _raise
+    raise ex.with_traceback(sys.exc_info()[2])  # set env var OC_CAUSE=1 for full trace
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/dictconfig.py", line 351, in __getattr__
+    return self._get_impl(
+           ~~~~~~~~~~~~~~^
+        key=key, default_value=_DEFAULT_MARKER_, validate_key=False
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/dictconfig.py", line 442, in _get_impl
+    node = self._get_child(
+        key=key, throw_on_missing_key=True, validate_key=validate_key
+    )
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/basecontainer.py", line 73, in _get_child
+    child = self._get_node(
+        key=key,
+    ...<3 lines>...
+        throw_on_missing_key=throw_on_missing_key,
+    )
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/dictconfig.py", line 475, in _get_node
+    self._validate_get(key)
+    ~~~~~~~~~~~~~~~~~~^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/dictconfig.py", line 164, in _validate_get
+    self._format_and_raise(
+    ~~~~~~~~~~~~~~~~~~~~~~^
+        key=key, value=value, cause=ConfigAttributeError(msg)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/base.py", line 231, in _format_and_raise
+    format_and_raise(
+    ~~~~~~~~~~~~~~~~^
+        node=self,
+        ^^^^^^^^^^
+    ...<4 lines>...
+        type_override=type_override,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/_utils.py", line 899, in format_and_raise
+    _raise(ex, cause)
+    ~~~~~~^^^^^^^^^^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/site-packages/omegaconf/_utils.py", line 797, in _raise
+    raise ex.with_traceback(sys.exc_info()[2])  # set env var OC_CAUSE=1 for full trace
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+omegaconf.errors.ConfigAttributeError: Key 'method' is not in struct
+    full_key: compress.method
+    object_type=dict
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/multiprocessing/process.py", line 313, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/lliu/NoWAG/NoWag.py", line 163, in compression_worker
+    compression_measure,
+    ^^^^^^^^^^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'compression_measure' where it is not associated with a value
+========================= Error in quantization of layer_5/mlp.gate_proj =========================
+Key 'method' is not in struct
+    full_key: compress.method
+    object_type=dict
+Stopping all workers due to error
+One or more processes raised an exception. Exiting.
+Exception ignored in atexit callback <function _exit_function at 0x7b5583c7dd00>:
+Traceback (most recent call last):
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/multiprocessing/util.py", line 352, in _exit_function
+    _run_finalizers()
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/multiprocessing/util.py", line 292, in _run_finalizers
+    finalizer()
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/multiprocessing/util.py", line 216, in __call__
+    res = self._callback(*self._args, **self._kwargs)
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/multiprocessing/queues.py", line 217, in _finalize_join
+    thread.join()
+  File "/home/lliu/miniconda3/envs/NoWag/lib/python3.13/threading.py", line 1092, in join
+    self._handle.join(timeout)
+KeyboardInterrupt: 

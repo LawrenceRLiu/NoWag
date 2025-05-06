@@ -1,0 +1,42 @@
+method: "Permute"
+
+kwargs:
+  permutation_config:
+    N: 2
+    M: 4
+    n_permutations0: 4
+    n_permutations1: 4
+
+  loss_fn_config:
+    name: "l2"
+    wrt_to_normalized: True
+    trainable_normalizer: False
+    loss_weighting: "hessianDiag"
+    hard_frac: 0.75
+
+  optimizer_config:
+    _target_: "torch.optim.Adam"
+    lr: 1e-1
+
+  beta_scheduler_config:
+    _target_: src.utils.beta_schedulers.LinearScheduler
+    beta_start: 2.0
+    beta_end: 1.0
+
+  n_iters: 1000
+
+  normalizer_kwargs:
+    norm_order:
+    - 0
+    - 1
+    zero:
+    - false
+    - false
+    p: 2
+
+
+# logging_path: "./test/permute.txt"
+# plotting_path: "./test/permute.png"
+
+
+

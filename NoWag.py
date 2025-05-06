@@ -24,6 +24,7 @@ from src.data import get_loaders
 from src.eval.main_fn import eval
 from src.quantize_compress import LinearVQ
 from src.sparse_compress import SparseLinear
+from src.permute_compress import PermutedSparseLinear
 from accelerate import infer_auto_device_map, dispatch_model
 import numpy as np
 
@@ -85,6 +86,10 @@ def compression_worker(
                 compression_module = LinearVQ(weight=weight, add_bias=cfg.add_bias)
             elif cfg.compress.method == "Sparse":
                 compression_module = SparseLinear(weight=weight, add_bias=cfg.add_bias)
+            elif cfg.compress.method == "Permute":
+                compression_module = PermutedSparseLinear(
+                    weight=weight, add_bias=cfg.add_bias
+                )
             else:
                 raise ValueError(f"Unknown compression type {cfg.compress.method}")
 
@@ -105,13 +110,28 @@ def compression_worker(
             else:
                 raise ValueError("hessian not found in the hessian file")
 
-            # compress the layer
-            compression_module.compress(**cfg.compress.kwargs)
+            #if the state dict exists, load it
+            if cfg.resume and os.path.exists(
+                os.path.join(cfg.temp_path, layer_name + ".pt")
+            ):
+                state_dict = torch.load(
+                    os.path.join(cfg.temp_path, layer_name + ".pt"),
+                    map_location=device,
+                )
+                compression_module.load_state_dict(state_dict)
+                if cfg.verbose:
+                    print(
+                        f"Loaded compression module {layer_name} from {cfg.temp_path}",
+                        flush=True,
+                    )
+            else:
+                # compress the layer
+                compression_module.compress(**cfg.compress.kwargs)
             compression_module.to(original_dtype)
 
             if cfg.verbose:
                 print(
-                    f"Compression module {layer_name} created, average unweighted l2 distortion: {compression_module.get_reconstruction_error()}",
+                    f"Compression module {layer_name} created, average unweighted l2 distortion: {compression_module.get_reconstruction_error()}, average weighted l2 distortion: {compression_module.get_reconstruction_error(error_weight = hessianDiag)}",
                     flush=True,
                 )
             # save the state dict
@@ -130,7 +150,7 @@ def compression_worker(
                     compression_module.get_n_bits(),
                     compression_module.get_n_original_parameters(),
                 )
-            elif cfg.compress.method == "Sparse":
+            elif cfg.compress.method == "Sparse" or cfg.compress.method == "Permute":
                 compression_measure = (
                     compression_module.get_n_nonzero(),
                     compression_module.get_n_original_parameters(),
@@ -270,7 +290,7 @@ def main(cfg: DictConfig):
         if cfg.compress.method == "LinearVQ":
             print(f"Total number of bytes: {human_format(running_first)}")
             print(f"Average bits per parameter: {round(running_first/running_params, 4)}")
-        elif cfg.compress.method == "Sparse":
+        elif cfg.compress.method == "Sparse" or cfg.compress.method == "Permute":
             print(f"Total number of non-zero parameters: {human_format(running_first)}")
             print(f"Actual Pruning fraction: {round(running_first/running_params, 4)}")
         print(f"=" * 25)
@@ -290,7 +310,7 @@ def main(cfg: DictConfig):
         )
 
         compression_config = {
-            "compression_kwargs": OmegaConf.to_container(cfg.compress.kwargs, resolve=True),
+            "compression_kwargs": OmegaConf.to_container(cfg.compress.kwargs, resolve=True) if cfg.compress.method != "Permute" else cfg.compress.kwargs,
             "compression_type": cfg.compress.method,
             "add_bias": cfg.add_bias,
             "skip_list": None,
