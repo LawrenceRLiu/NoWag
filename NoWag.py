@@ -109,15 +109,17 @@ def compression_worker(
 
             else:
                 raise ValueError("hessian not found in the hessian file")
-
+            print("here")
             #if the state dict exists, load it
-            if cfg.resume and os.path.exists(
+            print(os.path.join(cfg.temp_path, layer_name + ".pt"))
+            if cfg.resume_layerwise and os.path.exists(
                 os.path.join(cfg.temp_path, layer_name + ".pt")
             ):
                 state_dict = torch.load(
                     os.path.join(cfg.temp_path, layer_name + ".pt"),
                     map_location=device,
                 )
+                compression_module.blank_recreate(**cfg.compress.kwargs)
                 compression_module.load_state_dict(state_dict)
                 if cfg.verbose:
                     print(
@@ -125,6 +127,7 @@ def compression_worker(
                         flush=True,
                     )
             else:
+                # raise ValueError("stop here")
                 # compress the layer
                 compression_module.compress(**cfg.compress.kwargs)
             compression_module.to(original_dtype)
@@ -204,8 +207,11 @@ def main(cfg: DictConfig):
             print("Loaded model from", cfg.save_path)
         except Exception as e:
             print("Error loading model from", cfg.save_path)
+            # print the error and traceback
+            print(traceback.format_exc())
             print(e)
             compressed_model = None
+            raise e
         # raise NotImplementedError("This is a test")
     else:
         compressed_model = None
@@ -310,7 +316,7 @@ def main(cfg: DictConfig):
         )
 
         compression_config = {
-            "compression_kwargs": OmegaConf.to_container(cfg.compress.kwargs, resolve=True) if cfg.compress.method != "Permute" else cfg.compress.kwargs,
+            "compression_kwargs": OmegaConf.to_container(cfg.compress.kwargs, resolve=True),
             "compression_type": cfg.compress.method,
             "add_bias": cfg.add_bias,
             "skip_list": None,
@@ -347,8 +353,6 @@ def main(cfg: DictConfig):
             layer.to(orig_dtype)
             # delete the state dict to save memory
             del state_dict
-            # and delete the save path from disk
-            os.remove(save_path)
         clean()
         # save the model
         compressed_model.save_pretrained(os.path.join(cfg.save_path, "model"))
@@ -357,6 +361,10 @@ def main(cfg: DictConfig):
 
         device_map = infer_auto_device_map(compressed_model)
         compressed_model = dispatch_model(compressed_model, device_map=device_map)
+        
+        #delete all the temporary files
+        # for save_path in checkpoints_dict.values():
+        #     os.remove(save_path)
         
 
     # evaluate the models

@@ -6,17 +6,22 @@ kwargs:
     M: 4
     n_permutations0: 4
     n_permutations1: 4
+    mask_init: 1 
+    low_rank: 4
 
   loss_fn_config:
     name: "l2"
-    wrt_to_normalized: True
-    trainable_normalizer: False
-    loss_weighting: "hessianDiag"
+    wrt_to_normalized: False
+    trainable_normalizer: True
+    loss_weighting: None
     hard_frac: 0.75
+    lambda_sparse: 10
+    lambda_binary: 10
+
 
   optimizer_config:
     _target_: "torch.optim.Adam"
-    lr: 1e-1
+    lr: 1e-3
 
   beta_scheduler_config:
     _target_: src.utils.beta_schedulers.LinearScheduler
@@ -26,17 +31,13 @@ kwargs:
   n_iters: 1000
 
   normalizer_kwargs:
-    norm_order:
-    - 0
-    - 1
-    zero:
-    - false
-    - false
+    norm_order: []
+    zero: []
     p: 2
 
 
-# logging_path: "./test/permute.txt"
-# plotting_path: "./test/permute.png"
+  logging_path: "/data/lliu/NoWAG/test/permute.txt"
+  plotting_path: "/data/lliu/NoWAG/test/permute.png"
 
 
 

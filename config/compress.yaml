@@ -19,4 +19,5 @@ temp_path: ./models/${base_model}/temp/${run_name}
 seed: 0
 add_bias: False
 resume: False
+resume_layerwise: False
 log_wandb: False

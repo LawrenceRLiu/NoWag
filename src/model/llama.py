@@ -53,7 +53,7 @@ from transformers.models.llama.configuration_llama import LlamaConfig
 from ..quantize_compress import LinearVQ
 from ..sparse_compress import SparseLinear
 from ..permute_compress import PermutedSparseLinear
-
+from omegaconf import OmegaConf, DictConfig
 if is_torch_flex_attn_available():
     from torch.nn.attention.flex_attention import BlockMask
 
@@ -234,7 +234,7 @@ def CreateCompressedLayerHelper(n_in, n_out, config):
             n_out,
             add_bias=compress_config.get("add_bias", False),
             dtype=config.torch_dtype,
-            **compression_kwargs,
+            **OmegaConf.structured(compression_kwargs),
         )
     else:
         raise NotImplementedError(f"Compression type {compression_type} not supported")

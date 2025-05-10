@@ -20,20 +20,38 @@ from dataclasses import dataclass, field
 
 from src.compression_parent import CompressedLinear
 from src.utils import normalizer as normalize
-from src.utils import beta_schedulers
+from src.utils import schedulers
 from src.utils import sparse
 from src.utils import utils
 
+
+def gumbleize(x: torch.FloatTensor) -> torch.FloatTensor:
+    
+    #create a random gumble noise
+    noise = -torch.log(-torch.log(torch.rand_like(x)))
+    return x + noise
+
 class PermutatedSoftSparse(nn.Module):
+    trainable_permutations: bool = False
+    low_rank: bool = False
+    temp: float
+    hard: bool = False
+    gumble: bool = True
     
     def __init__(self, original_weight: torch.FloatTensor,
                  normalizer: normalize.Normalizer,
                  N: int,
                  M: int,
+                 binary_init_range:float = 0.0,
                  n_permutations0:int = 10,
                  n_permutations1:int = 10,  
                  gamma: float = -0.1,
-                 xi:float = 1.1
+                 xi:float = 1.1,
+                 low_rank: int = -1,
+                 random_permutations: bool = True,
+                 gumble: bool = False,
+                 hard: bool = False,
+                 temp_init:float = 1.0
                  ) -> None:
         """
         A permutation based sparse layer with a soft sparse mask
@@ -50,18 +68,27 @@ class PermutatedSoftSparse(nn.Module):
         super().__init__()
 
         self.weight = nn.Parameter(torch.zeros_like(original_weight), requires_grad=True)
-        self.sparse_mask = nn.Parameter(torch.zeros_like(original_weight), requires_grad=True)
-        self.sparse_mask.data.uniform_(-1, 1)
+        self.sparse_mask = nn.Parameter((torch.rand_like(original_weight)-0.5)*2*binary_init_range, requires_grad=True)
         
         
-        self.register_buffer("permutations0", torch.stack([torch.arange(original_weight.shape[0])] + [torch.randperm(original_weight.shape[0]) for _ in range(n_permutations0-1)])) 
-        self.register_buffer("permutations1", torch.stack([torch.arange(original_weight.shape[1])] + [torch.randperm(original_weight.shape[1]) for _ in range(n_permutations1-1)]))
+        if random_permutations:
+            self.register_buffer("permutations0", torch.stack([torch.arange(original_weight.shape[0])] + [torch.randperm(original_weight.shape[0]) for _ in range(n_permutations0-1)])) 
+            self.register_buffer("permutations1", torch.stack([torch.arange(original_weight.shape[1])] + [torch.randperm(original_weight.shape[1]) for _ in range(n_permutations1-1)]))
 
+        #otherwise create the permutations as soft matricies which we will learn
+        else:
+            self.permutations0 = nn.Parameter((torch.rand((n_permutations0, original_weight.shape[0], original_weight.shape[0]))-0.5)*2*binary_init_range, requires_grad=True)
+            self.permutations1 = nn.Parameter((torch.rand((n_permutations1, original_weight.shape[1], original_weight.shape[1]))-0.5)*2*binary_init_range, requires_grad=True)
+            self.trainable_permutations = True
         
         self.permutation_scales0 = nn.Parameter(torch.randn(n_permutations0, original_weight.shape[0])/n_permutations0, requires_grad=True)
         self.permutation_scales1 = nn.Parameter(torch.randn(n_permutations1, original_weight.shape[1])/n_permutations1, requires_grad=True)
         
-        
+        if low_rank > 0:
+            self.A = nn.Parameter(torch.randn(original_weight.shape[0],low_rank), requires_grad=True)
+            self.B = nn.Parameter(torch.zeros(low_rank, original_weight.shape[1]), requires_grad=True)
+            self.low_rank = True
+
         self.N = N
         self.M = M
         self.gamma = gamma
@@ -70,10 +97,17 @@ class PermutatedSoftSparse(nn.Module):
         self.original_weight = original_weight
         self.normalizer = normalizer
         self.to(original_weight.device)
+
+        self.gumble = gumble
+        self.hard = hard
+        self.temp = temp_init
+        
         
     def sigmoid(self, x: torch.Tensor) -> torch.Tensor:
         #scaled and clipped sigmoid function
-        return torch.clip((self.xi-self.gamma) * torch.sigmoid(x) + self.gamma, 0, 1)
+        if self.gumble:
+            x = gumbleize(x)
+        return torch.clip((self.xi-self.gamma) * torch.sigmoid(x/self.temp) + self.gamma, 0, 1)
     
     def reconstruct_weight(self, sparse_weight: torch.Tensor,
                            denormalize:bool = True) -> torch.Tensor:
@@ -87,6 +121,9 @@ class PermutatedSoftSparse(nn.Module):
         
         if denormalize:
             weight = self.normalizer.denormalize(weight)
+            
+        if self.low_rank:
+            weight += self.A @ self.B
         return weight
     
     def forward(self, denormalize:bool = False) -> torch.Tensor:
@@ -125,7 +162,11 @@ class PermutatedSoftSparse(nn.Module):
         sparse_weight = self.weight * sparse_mask
         return self.reconstruct_weight(sparse_weight, denormalize=denormalize)
     
-
+    def temp_update(self, temp: float) -> None:
+        #update the temperature
+        self.temp = temp
+        
+        
 @dataclass
 class loss_fn_class:
     soft_compression_module: PermutatedSoftSparse 
@@ -439,6 +480,12 @@ class PermutedSparseLinear(CompressedLinear):
         self.permutation_scales0 = nn.Parameter(soft_sparse.permutation_scales0.clone().detach(), requires_grad=True)
         self.permutation_scales1 = nn.Parameter(soft_sparse.permutation_scales1.clone().detach(), requires_grad=True)
         
+        if soft_sparse.low_rank:
+            self.A = nn.Parameter(soft_sparse.A.clone().detach(), requires_grad=True)
+            self.B = nn.Parameter(soft_sparse.B.clone().detach(), requires_grad=True)
+            self.low_rank = True
+        else:
+            self.low_rank = False
         
     def compress(self, 
                 permutation_config: DictConfig,
@@ -494,6 +541,8 @@ class PermutedSparseLinear(CompressedLinear):
             #permutate, sum and then pass through the sparse module
             # print("x pre permutation:", x)
             # print("x[..., self.permutations_idx1]:", x[..., self.permutations_idx1_inv].shape)
+            if self.low_rank:
+                y_low_rank = F.linear(F.linear(x, self.B), self.A)
             x = self.normalizer.denormalize_otf_in(x)
             x = torch.einsum("...ij,ij->...j", x[..., self.permutations_idx1_inv], 
                              self.permutation_scales1[torch.arange(self.permutation_scales1.shape[0]).unsqueeze(1),
@@ -509,7 +558,11 @@ class PermutedSparseLinear(CompressedLinear):
             #permutate again
             y = torch.einsum("...ij,ij->...j", y[..., self.permutations_idx0], self.permutation_scales0)
             y = self.normalizer.denormalize_otf_out(y)
+            if self.low_rank:
+                y += y_low_rank
             # print("y post permutation:", y)
+        print("y post permutation:", y)
+        # raise ValueError("stop here")
         return y
     
     def reconstruct_(self, denormalize: bool = True) -> torch.FloatTensor:
@@ -527,6 +580,9 @@ class PermutedSparseLinear(CompressedLinear):
         
         if denormalize:
             weight = self.normalizer.denormalize(weight)
+            
+        if self.low_rank:
+            weight += self.A @ self.B
             
         return weight
     
@@ -571,7 +627,20 @@ class PermutedSparseLinear(CompressedLinear):
         
         self.permutation_scales0 = nn.Parameter(torch.zeros(permutation_config.n_permutations0, self.original_weight.shape[0]), requires_grad=True)
         self.permutation_scales1 = nn.Parameter(torch.zeros(permutation_config.n_permutations1, self.original_weight.shape[1]), requires_grad=True)
+        
+        if permutation_config.low_rank > 0:
+            self.A = nn.Parameter(torch.randn(self.original_weight.shape[0], permutation_config.low_rank), requires_grad=True)
+            self.B = nn.Parameter(torch.zeros(permutation_config.low_rank, self.original_weight.shape[1]), requires_grad=True)
+            self.low_rank = True
+        else:
+            self.low_rank = False
+            
+            
         self.to(self.original_weight.device)
+        
+    
+        
+        self.compressed = True
         
     def get_additional_bits(self):
         
@@ -581,6 +650,12 @@ class PermutedSparseLinear(CompressedLinear):
             self.permutations_idx0,
             self.permutations_idx1,
         ]]) * 16 # 16 bits per float or int
+        
+        if self.low_rank:
+            additional_bits += sum([a.numel() for a in [
+                self.A,
+                self.B,
+            ]]) * 16
         return additional_bits
     
     def get_n_bits(self):
@@ -591,7 +666,7 @@ class PermutedSparseLinear(CompressedLinear):
     
     def get_n_nonzero(self):
         # if self.compressed:
-        recon = self.reconstruct(denormalize=False)
+        recon = self.sparse_module.reconstruct()
         n_nonzero = torch.sum(recon != 0).item() + (self.normalizer.get_n_bits() + self.get_additional_bits())//16
         return n_nonzero
         # else:
@@ -605,7 +680,7 @@ def testing_main(cfg: DictConfig) -> None:
     utils.seed(0)
     device = "cuda:7"
     print("current_directory:", os.getcwd())
-    weight_path = "/data/lliu/NoWAG/models/meta-llama/Llama-2-7b-hf/original_weights/layer_0/mlp.down_proj.pt"
+    weight_path = "/data/lliu/NoWAG/models/meta-llama/Llama-2-7b-hf/original_weights/layer_0/self_attn.v_proj.pt"
     hessian_diag = weight_path.replace("original_weights", "hessianDiags/seed_0/pajama/128")
 
     
@@ -619,7 +694,7 @@ def testing_main(cfg: DictConfig) -> None:
     print(OmegaConf.to_yaml(cfg))
     # raise ValueError("stop here")
     compression_module.compress(
-        **cfg
+        **cfg.kwargs
     )
     
     
@@ -651,13 +726,19 @@ def testing_main(cfg: DictConfig) -> None:
     new_compression_module = PermutedSparseLinear(weight)
     
     new_compression_module.blank_recreate(
-        **cfg)
+        **cfg.kwargs)
     
     new_compression_module.load_state_dict(state_dict)
     
     assert torch.allclose(
         new_compression_module.reconstruct(), compression_module.reconstruct(), atol=1e-5
     ), "Weight does not match"
+    
+    y_blank_recreate = new_compression_module(x)
+    assert torch.allclose(y_naive, y_blank_recreate, atol=1e-5), "Naive and blank recreate forward pass do not match"
+    
+    y_orig = F.linear(x, weight)
+    print("y_orig:", y_orig)
     
     
 
