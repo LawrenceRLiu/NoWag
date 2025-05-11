@@ -369,3 +369,14 @@ class UnstructuredSparse(nn.Module):
         # n_indicies_bits = torch.ceil(torch.log2(max(nse, nrows)))
         nbits = ((nrows * 16 + (16 + 16) * nse)).item()
         return nbits
+
+    def set_mask_and_values(
+        self,
+        sparse_mask: torch.BoolTensor,
+        sparse_values: torch.Tensor,
+        n_sparse: Optional[int] = None,
+    ):
+        self.sparse_mask = sparse_mask
+        self.sparse_values = nn.Parameter(sparse_values.detach().clone())
+        if n_sparse is not None:
+            self.n_sparse = n_sparse

@@ -88,7 +88,8 @@ def compression_worker(
                 compression_module = SparseLinear(weight=weight, add_bias=cfg.add_bias)
             elif cfg.compress.method == "Permute":
                 compression_module = PermutedSparseLinear(
-                    weight=weight, add_bias=cfg.add_bias
+                    weight=weight, add_bias=cfg.add_bias,
+                    verbose = cfg.verbose
                 )
             else:
                 raise ValueError(f"Unknown compression type {cfg.compress.method}")
@@ -109,9 +110,9 @@ def compression_worker(
 
             else:
                 raise ValueError("hessian not found in the hessian file")
-            print("here")
+            # print("here")
             #if the state dict exists, load it
-            print(os.path.join(cfg.temp_path, layer_name + ".pt"))
+            # print(os.path.join(cfg.temp_path, layer_name + ".pt"))
             if cfg.resume_layerwise and os.path.exists(
                 os.path.join(cfg.temp_path, layer_name + ".pt")
             ):

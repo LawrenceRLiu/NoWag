@@ -4,35 +4,29 @@ kwargs:
   permutation_config:
     N: 2
     M: 4
-    n_permutations0: 4
-    n_permutations1: 4
-    mask_init: 1 
-    low_rank: 4
-
-  loss_fn_config:
-    name: "l2"
-    wrt_to_normalized: False
-    trainable_normalizer: True
-    loss_weighting: None
-    hard_frac: 0.75
-    lambda_sparse: 10
-    lambda_binary: 10
+    n_permutations_0: 8
+    n_permutations_1: 8
+    block_size: 64
+    initalize_method: "Greedy"
+    importance_weight: "hessianDiag"
 
 
   optimizer_config:
     _target_: "torch.optim.Adam"
-    lr: 1e-3
+    lr: 1e-4
 
-  beta_scheduler_config:
-    _target_: src.utils.beta_schedulers.LinearScheduler
-    beta_start: 2.0
-    beta_end: 1.0
-
-  n_iters: 1000
+  loss_atol: 1e-8
+  loss_rtol: 1e-6
+  optimizer_patience: 5
+  overall_patience: 10
+  permutation_rtol: 1e-3
+  n_iters: 100
+  n_adam_steps_per_iter: 10
+  n_permutation_changes_per_iter: 1
 
   normalizer_kwargs:
-    norm_order: []
-    zero: []
+    norm_order: [0, 1]
+    zero: [False, False]
     p: 2
 
 
