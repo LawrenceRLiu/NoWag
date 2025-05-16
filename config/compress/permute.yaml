@@ -4,34 +4,54 @@ kwargs:
   permutation_config:
     N: 2
     M: 4
-    n_permutations_0: 8
-    n_permutations_1: 8
-    block_size: 64
-    initalize_method: "Greedy"
+    n_permutations_0: 4
+    n_permutations_1: 4
+    block_size: 256
     importance_weight: "hessianDiag"
+    mask_cfg:
+      trainable_mask: False
+      init_range: 0.1
+      random_mask: True
+      add_noise: False
+      return_hard: False
+      temp_scheduler_config:
+        _target_: "src.utils.schedulers.LogLinearScheduler"
+        n_iters: 1000
+        start: 1
+        end: 1e-2
 
 
   optimizer_config:
     _target_: "torch.optim.Adam"
     lr: 1e-4
 
-  loss_atol: 1e-8
-  loss_rtol: 1e-6
-  optimizer_patience: 5
-  overall_patience: 10
-  permutation_rtol: 1e-3
-  n_iters: 100
-  n_adam_steps_per_iter: 10
-  n_permutation_changes_per_iter: 1
+  training_config:
+    n_iters: 100
+    n_optimizer_steps_per_iter: 10
+    n_permutation_changes_per_iter: 4
+    n_warmup_optimizer_steps: -1
+    greedy_optimize_steps_per_iter: 0
+    temp_step_every: optimizer
+    regularization_weight: 0.01
+    early_stop_atol: 1e-8
+    early_stop_rtol: 1e-6
+    loss_atol: 1e-8
+    loss_rtol: 1e-6
+    overall_patience: 100
+    optimizer_patience: 100
+    permutation_acceptance_rtol: 1e-3
+    logging_path: "/data/lliu/NoWAG/test/permute.txt"
+    plotting_path: "/data/lliu/NoWAG/test/permute.png"
+    mask_kwargs: 
+      add_noise: False
+      return_hard: False
+
 
   normalizer_kwargs:
     norm_order: [0, 1]
     zero: [False, False]
     p: 2
 
-
-  logging_path: "/data/lliu/NoWAG/test/permute.txt"
-  plotting_path: "/data/lliu/NoWAG/test/permute.png"
 
 
 

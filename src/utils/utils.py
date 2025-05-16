@@ -139,6 +139,19 @@ def human_format(num):
         "{:f}".format(num).rstrip("0").rstrip("."), ["", "K", "M", "B", "T"][magnitude]
     )
 
+def gumble_noise(x):
+    """adds gumbel noise to a tensor
+
+    Args:
+        x (torch.Tensor): the tensor to add noise to
+
+    Returns:
+        torch.Tensor: the tensor with noise added
+    """
+    noise = torch.empty_like(x).uniform_()
+    noise = -torch.log(-torch.log(noise))
+    return noise
+
 
 if __name__ == "__main__":
 
