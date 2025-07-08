@@ -57,11 +57,6 @@ run `finetune_layerwise.py` with `run_name` specified to be the same as the `run
 └── README.md           # Project documentation
 ```
 
-## ToDOs:
-- [ ] Cuda Kernels for NoWag-VQ (Comming Soon!)
-- [ ] End to End Post Compression Fine Tuning (Comming Soon!)
-- [ ] [Trellis](https://arxiv.org/abs/2406.11235) Quantization (Comming Soon!)
-- [ ] Support for more models (Comming Soon!)
 
 ## Citation
 If you use this framework in your research, please cite:
