@@ -4,6 +4,7 @@
 
 ![Nowag Overview](assets/Overview.png)
 
+**NoWag was accepted to the Conference on Optimization and Learning for Models (COLM) 2025! Looking forward to seeing you at the conference!**
 ## Overview
 This is the official implementation of NoWag, a unified framework for shape-preserving compression of large language models. 
 

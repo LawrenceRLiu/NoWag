@@ -4,7 +4,7 @@ kwargs:
   ignore_norms: true
   n_bits: 2
   n_inits: 1
-  n_iters: 100
+  n_iter: 100
   initialize_method: kmeans++
   initialize_kwargs:
     deterministic: False
