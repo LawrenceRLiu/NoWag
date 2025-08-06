@@ -4,7 +4,7 @@
 
 ![Nowag Overview](assets/Overview.png)
 
-**NoWag was accepted at COLM 2025! Looking forward to seeing you at the conference!**
+**NoWag was accepted at COLM 2025! Looking forward to seeing you in Montreal!**
 ## Overview
 This is the official implementation of NoWag, a unified framework for shape-preserving compression of large language models. 
 
@@ -61,14 +61,11 @@ run `finetune_layerwise.py` with `run_name` specified to be the same as the `run
 ## Citation
 If you use this framework in your research, please cite:
 ```
-@misc{liu2025nowagunifiedframeworkshape,
-      title={NoWag: A Unified Framework for Shape Preserving Compression of Large Language Models}, 
-      author={Lawrence Liu and Inesh Chakrabarti and Yixiao Li and Mengdi Wang and Tuo Zhao and Lin F. Yang},
-      year={2025},
-      eprint={2504.14569},
-      archivePrefix={arXiv},
-      primaryClass={cs.LG},
-      url={https://arxiv.org/abs/2504.14569}, 
+@article{liu2025nowag,
+  title={NoWag: A Unified Framework for Shape Preserving Compression of Large Language Models},
+  author={Liu, Lawrence and Chakrabarti, Inesh and Li, Yixiao and Wang, Mengdi and Zhao, Tuo and Yang, Lin F},
+  journal={arXiv preprint arXiv:2504.14569},
+  year={2025}
 }
 ```
 
